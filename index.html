@@ -8,12 +8,18 @@
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
         
         body { 
-            background-color: #0f0f0f; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://i.postimg.cc/TwQdQPH3/file-00000000e19482308de4c5157b79d241.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            
             color: #fff; 
             font-family: 'Vazirmatn', sans-serif; 
             padding: 20px; 
             padding-bottom: 60px; 
             margin: 0;
+            min-height: 100vh;
         }
         
         .container { 
@@ -26,14 +32,30 @@
             justify-content: space-between; 
             align-items: center; 
             margin-bottom: 25px; 
-            padding-bottom: 15px;
-            border-bottom: 1px solid #222;
+            padding: 15px;
+            background-color: rgba(26, 26, 26, 0.85);
+            border-radius: 12px;
+            border: 1px solid #333;
+            backdrop-filter: blur(5px);
         }
         
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-title img {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
         .header h1 { 
             margin: 0; 
             color: #FFCC00; 
-            font-size: 24px;
+            font-size: 22px;
         }
         
         .btn { 
@@ -57,11 +79,12 @@
             margin-bottom: 25px; 
             border-radius: 8px; 
             border: 1px solid #333; 
-            background: #1a1a1a; 
+            background: rgba(26, 26, 26, 0.85);
             color: #fff; 
             box-sizing: border-box; 
             font-family: inherit;
             outline: none;
+            backdrop-filter: blur(5px);
         }
         
         .search-bar:focus {
@@ -69,12 +92,13 @@
         }
         
         .card { 
-            background-color: #1a1a1a; 
+            background-color: rgba(26, 26, 26, 0.85);
             padding: 20px; 
             border-radius: 12px; 
             margin-bottom: 20px; 
             border: 1px solid #2a2a2a; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
         }
         
         .card h3 { 
@@ -86,7 +110,7 @@
         
         .card p { 
             font-size: 13px; 
-            color: #aaa; 
+            color: #ddd;
             line-height: 1.6;
             margin-bottom: 15px;
             display: -webkit-box;
@@ -98,7 +122,7 @@
         }
         
         .code-container {
-            background: #000; 
+            background: rgba(0, 0, 0, 0.7); 
             border-radius: 8px; 
             border: 1px solid #333;
             margin-bottom: 15px;
@@ -155,28 +179,32 @@
             padding: 12px 20px; 
             font-size: 11px; 
             color: #666; 
-            background: #0f0f0f; 
+            background: rgba(15, 15, 15, 0.9); 
             border-top: 1px solid #222; 
             box-sizing: border-box; 
+            backdrop-filter: blur(5px);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>ScriptShare</h1>
+            <div class="logo-title">
+                <img src="https://i.postimg.cc/9MPR2VgX/y2k-1792590018289.jpg" alt="Logo">
+                <h1>ScriptShare</h1>
+            </div>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
         </div>
         
         <input type="text" id="searchInput" class="search-bar" placeholder="جستجوی اسکریپت...">
         
         <div id="scripts-list">
-            <p style="text-align:center; color:#666;">در حال بارگذاری...</p>
+            <p style="text-align:center; color:#ddd;">در حال بارگذاری...</p>
         </div>
     </div>
 
     <div class="footer">
-        Timsar ScriptShare | V2.0
+        Timsar ScriptShare | V3.0
     </div>
 
     <script>
@@ -190,7 +218,7 @@
                 const rows = data.split('\n');
                 
                 if (rows.length < 2) {
-                    document.getElementById('scripts-list').innerHTML = '<p style="text-align:center; color:#666;">هنوز اسکریپتی آپلود نشده.</p>';
+                    document.getElementById('scripts-list').innerHTML = '<p style="text-align:center; color:#ddd;">هنوز اسکریپتی آپلود نشده.</p>';
                     return;
                 }
 
@@ -248,7 +276,7 @@
             container.innerHTML = '';
 
             if (scripts.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#666;">اسکریپتی یافت نشد.</p>';
+                container.innerHTML = '<p style="text-align:center; color:#ddd;">اسکریپتی یافت نشد.</p>';
                 return;
             }
 
