@@ -159,17 +159,13 @@
                 const data = await res.text();
                 const rows = data.split('\n');
                 
-                // پیدا کردن ایندکس دقیق ستون ها بر اساس اسم (نه شماره)
-                const headers = rows[0].split(',').map(h => h.toLowerCase().trim());
-                let nameIdx = -1, codeIdx = -1, descIdx = -1, gameIdx = -1, creatorIdx = -1;
-                
-                headers.forEach((h, i) => {
-                    if (h === 'name' || h.includes('name') && !h.includes('game') && !h.includes('creator')) nameIdx = i;
-                    if (h === 'code' || h.includes('code')) codeIdx = i;
-                    if (h === 'description' || h.includes('desc')) descIdx = i;
-                    if (h.includes('game name') || h.includes('game')) gameIdx = i;
-                    if (h.includes('creator name') || h.includes('creator')) creatorIdx = i;
-                });
+                // ایندکس ستون‌ها بر اساس عکس جدیدت (شروع از 0):
+                // A=0, B=1, C=2, D=3, E=4 (Game Name), F=5 (Creator Name)
+                const nameIdx = 1;
+                const codeIdx = 2;
+                const descIdx = 3;
+                const gameIdx = 4;
+                const creatorIdx = 5;
 
                 allScripts = [];
                 for (let i = 1; i < rows.length; i++) {
@@ -179,8 +175,8 @@
                     const name = cols[nameIdx] || 'بدون نام';
                     const desc = cols[descIdx] || '';
                     const code = (cols[codeIdx] || '').replace(/<br>/g, '\n');
-                    const game = (gameIdx !== -1 && cols[gameIdx]) ? cols[gameIdx] : 'نامشخص';
-                    const creator = (creatorIdx !== -1 && cols[creatorIdx]) ? cols[creatorIdx] : 'ناشناس';
+                    const game = cols[gameIdx] || 'نامشخص';
+                    const creator = cols[creatorIdx] || 'ناشناس';
                     
                     if (name !== 'بدون نام' && name) {
                         allScripts.push({ name, desc, code, game, creator });
