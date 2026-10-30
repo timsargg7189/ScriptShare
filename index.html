@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScriptShare</title>
     <style>
-        body { background-color: #121212; color: #fff; font-family: sans-serif; padding: 20px; }
+        body { background-color: #121212; color: #fff; font-family: sans-serif; padding: 20px; padding-bottom: 60px; }
         .container { max-width: 600px; margin: auto; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .btn { background-color: #FFCC00; color: #000; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; border: none; cursor: pointer; }
@@ -14,11 +14,10 @@
         .card h3 { margin-top: 0; color: #FFCC00; }
         .card p { font-size: 14px; color: #ccc; }
         .card pre { background: #000; padding: 10px; overflow-x: auto; border-radius: 5px; font-size: 12px; border: 1px solid #444; white-space: pre-wrap; }
-        .action-btns { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+        .action-btns { display: flex; justify-content: flex-start; align-items: center; margin-top: 10px; }
         .copy-btn { background: #4caf50; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .copy-btn:hover { background: #45a049; }
-        .like-btn { background: #333; color: #fff; border: 1px solid #555; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
-        .like-btn:hover { background: #444; }
+        .footer { position: fixed; bottom: 0; left: 0; width: 100%; text-align: right; padding: 10px 20px; font-size: 10px; color: #666; background: #121212; border-top: 1px solid #222; box-sizing: border-box; }
     </style>
 </head>
 <body>
@@ -33,6 +32,11 @@
         <div id="scripts-list">
             <p>در حال بارگذاری...</p>
         </div>
+    </div>
+
+    <!-- فوتر سایت -->
+    <div class="footer">
+        Timsar ScriptShare | V1.0
     </div>
 
     <script>
@@ -50,7 +54,6 @@
                     return;
                 }
 
-                // پیدا کردن ایندکس ستون‌ها بر اساس اسم سرستون
                 const headers = rows[0].split(',');
                 let nameIdx = 1, descIdx = 3, codeIdx = 2;
                 headers.forEach((h, i) => {
@@ -65,8 +68,6 @@
                 for (let i = 1; i < rows.length; i++) {
                     if (!rows[i].trim()) continue;
                     
-                    // روش جدید برای جدا کردن ستون‌ها با در نظر گرفتن فاصله‌ها و کاماها
-                    // این بخش رو ساده‌تر کردم که فاصله‌ها رو خراب نکنه
                     let currentLine = rows[i];
                     let cols = [];
                     let inQuotes = false;
@@ -83,8 +84,6 @@
                         }
                     }
                     cols.push(currentCol);
-
-                    // پاک کردن کوتیشن‌های اضافی
                     cols = cols.map(c => c.replace(/^"|"$/g, ''));
 
                     const name = cols[nameIdx] || 'بدون نام';
@@ -122,7 +121,6 @@
                     <pre><code>${script.code}</code></pre>
                     <div class="action-btns">
                         <button class="copy-btn" onclick="copyText(\`${script.code.replace(/`/g, '\\`')}\`)">کپی کد</button>
-                        <button class="like-btn" onclick="likeScript(this)">❤️ 0</button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -135,14 +133,6 @@
             });
         }
 
-        function likeScript(btn) {
-            // فقط برای نمایش است (چون دیتابیس نداریم)
-            let count = parseInt(btn.innerText.split(' ')[1]) || 0;
-            btn.innerText = `❤️ ${count + 1}`;
-            btn.style.color = '#ff4d4d';
-        }
-
-        // جستجو
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase();
             const filtered = allScripts.filter(s => s.name.toLowerCase().includes(query));
