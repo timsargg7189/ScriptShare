@@ -7,133 +7,152 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
         
+        /* ═══ متغیرهای رنگ برای تم ═══ */
+        :root {
+            /* Dark Theme (Default) */
+            --bg-gradient: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2a2a00 100%);
+            --text-color: #fff;
+            --text-dim: #ddd;
+            --header-bg: rgba(26, 26, 26, 0.85);
+            --border-color: #333;
+            --card-bg: rgba(26, 26, 26, 0.85);
+            --input-bg: rgba(26, 26, 26, 0.85);
+            --footer-bg: rgba(15, 15, 15, 0.95);
+            --code-bg: rgba(0, 0, 0, 0.7);
+            --btn-bg: #FFCC00;
+            --btn-text: #000;
+            --accent: #FFCC00;
+        }
+
+        .light-mode {
+            /* Light Theme */
+            --bg-gradient: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 50%, #fff9c4 100%);
+            --text-color: #222;
+            --text-dim: #555;
+            --header-bg: rgba(255, 255, 255, 0.9);
+            --border-color: #ccc;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --input-bg: rgba(255, 255, 255, 0.9);
+            --footer-bg: rgba(255, 255, 255, 0.95);
+            --code-bg: rgba(0, 0, 0, 0.05);
+            --btn-bg: #ffb300;
+            --btn-text: #000;
+            --accent: #ff8f00;
+        }
+
         body { 
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2a2a00 100%);
-            color: #fff; 
+            background: var(--bg-gradient);
+            color: var(--text-color); 
             font-family: 'Vazirmatn', sans-serif; 
             padding: 20px; 
-            padding-bottom: 80px; /* فضای بیشتر برای فوتر بزرگتر */
+            padding-bottom: 80px; 
             margin: 0;
             min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
         }
         
         .container { max-width: 600px; margin: auto; }
         
-        /* هدر ساده: فقط اسم و دکمه منو */
         .header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             margin-bottom: 25px; 
             padding: 12px 15px;
-            background-color: rgba(26, 26, 26, 0.85);
+            background-color: var(--header-bg);
             border-radius: 12px;
-            border: 1px solid #FFCC00;
+            border: 1px solid var(--accent);
             backdrop-filter: blur(5px);
             box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+            transition: background 0.3s;
         }
         
-        .header h1 { margin: 0; color: #FFCC00; font-size: 22px; }
+        .header h1 { margin: 0; color: var(--accent); font-size: 22px; }
         
-        .menu-btn {
+        .header-btns { display: flex; gap: 8px; align-items: center; }
+
+        .icon-btn {
             background: none;
-            border: 1px solid #FFCC00;
-            color: #FFCC00;
-            font-size: 20px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            font-size: 18px;
             cursor: pointer;
-            padding: 4px 10px;
+            padding: 4px 8px;
             border-radius: 6px;
             transition: 0.2s;
         }
-        .menu-btn:hover { background: rgba(255, 204, 0, 0.1); }
+        .icon-btn:hover { background: rgba(255, 204, 0, 0.1); }
 
-        .search-bar { width: 100%; padding: 12px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #333; background: rgba(26, 26, 26, 0.85); color: #fff; box-sizing: border-box; font-family: inherit; outline: none; backdrop-filter: blur(5px); }
-        .search-bar:focus { border-color: #FFCC00; }
+        .search-bar { width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-color); box-sizing: border-box; font-family: inherit; outline: none; backdrop-filter: blur(5px); transition: 0.3s; }
+        .search-bar:focus { border-color: var(--accent); }
+
+        .categories {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .categories::-webkit-scrollbar { display: none; }
         
-        .card { background-color: rgba(26, 26, 26, 0.85); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #2a2a2a; box-shadow: 0 4px 6px rgba(0,0,0,0.3); backdrop-filter: blur(5px); }
-        .card h3 { margin-top: 0; color: #FFCC00; margin-bottom: 10px; font-size: 18px; }
-        .card p { font-size: 13px; color: #ddd; line-height: 1.6; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; word-break: break-word; }
+        .cat-btn {
+            background: var(--input-bg);
+            color: var(--text-dim);
+            border: 1px solid var(--border-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: inherit;
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+        .cat-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .cat-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: bold; }
         
-        .code-container { background: rgba(0, 0, 0, 0.7); border-radius: 8px; border: 1px solid #333; margin-bottom: 15px; overflow: hidden; }
-        .card pre { margin: 0; padding: 15px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; word-wrap: break-word; max-height: 150px; }
+        .card { background-color: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.1); backdrop-filter: blur(5px); transition: 0.3s; }
+        .card h3 { margin-top: 0; color: var(--accent); margin-bottom: 5px; font-size: 18px; }
+        .card .cat-tag { font-size: 10px; color: #000; background: var(--accent); padding: 2px 8px; border-radius: 10px; display: inline-block; margin-bottom: 10px; font-weight: bold; }
+        .card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; word-break: break-word; }
+        
+        .code-container { background: var(--code-bg); border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; overflow: hidden; transition: 0.3s; }
+        .card pre { margin: 0; padding: 15px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; word-wrap: break-word; max-height: 150px; color: var(--text-color); }
         .card pre::-webkit-scrollbar { height: 6px; width: 6px; }
-        .card pre::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+        .card pre::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
         
         .copy-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: inherit; transition: 0.2s; }
         .copy-btn:hover { background: #45a049; }
         
-        /* فوتر جدید (کادر پایین) */
         .footer { 
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            width: 100%; 
-            display: flex;
-            justify-content: space-between; /* فاصله بین متن و دکمه */
-            align-items: center;
-            padding: 15px 20px; 
-            font-size: 12px; 
-            color: #666; 
-            background: rgba(15, 15, 15, 0.95); 
-            border-top: 1px solid #FFCC00; /* خط زرد بالای فوتر */
-            box-sizing: border-box; 
-            backdrop-filter: blur(10px);
+            position: fixed; bottom: 0; left: 0; width: 100%; display: flex;
+            justify-content: space-between; align-items: center;
+            padding: 15px 20px; font-size: 12px; color: var(--text-dim); 
+            background: var(--footer-bg); border-top: 1px solid var(--accent);
+            box-sizing: border-box; backdrop-filter: blur(10px);
+            transition: 0.3s;
         }
 
-        /* دکمه افزودن اسکریپت داخل فوتر */
         .footer .btn { 
-            background-color: #FFCC00; 
-            color: #000; 
-            padding: 10px 15px; 
-            text-decoration: none; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            font-size: 13px; 
-            transition: 0.2s; 
-            white-space: nowrap;
+            background-color: var(--btn-bg); color: var(--btn-text); padding: 10px 15px; 
+            text-decoration: none; border-radius: 8px; font-weight: bold; 
+            font-size: 13px; transition: 0.2s; white-space: nowrap;
         }
         .footer .btn:hover { background-color: #e6b800; }
 
-        /* ═══ منوی کناری (Drawer) ═══ */
-        .drawer-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); z-index: 998; display: none;
-            backdrop-filter: blur(3px);
-        }
-        .drawer {
-            position: fixed; top: 0; right: -300px; width: 250px; height: 100%;
-            background: #1a1a1a; z-index: 999; transition: 0.3s ease;
-            border-left: 1px solid #FFCC00; padding: 20px; box-sizing: border-box;
-            display: flex; flex-direction: column; gap: 15px;
-        }
+        /* منوی کناری */
+        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 998; display: none; backdrop-filter: blur(3px); }
+        .drawer { position: fixed; top: 0; right: -300px; width: 260px; height: 100%; background: var(--header-bg); z-index: 999; transition: 0.3s ease; border-left: 1px solid var(--accent); padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
         .drawer.open { right: 0; }
-        
-        .drawer-header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 10px;
-        }
-        .drawer-close { background: none; border: none; color: #FFCC00; font-size: 20px; cursor: pointer; }
-        
-        .drawer-item {
-            color: #fff; text-decoration: none; font-size: 15px; padding: 12px;
-            border-radius: 8px; background: rgba(255, 204, 0, 0.1); cursor: pointer;
-            transition: 0.2s; border: 1px solid transparent;
-        }
-        .drawer-item:hover { background: rgba(255, 204, 0, 0.2); border-color: #FFCC00; }
-
-        /* ═══ بخش آموزش ═══ */
-        .tutorial-section {
-            display: none;
-            flex-direction: column; gap: 10px;
-        }
-        .tutorial-section.active { display: flex; }
-        .tutorial-back-btn {
-            background: none; border: none; color: #FFCC00; font-size: 14px;
-            cursor: pointer; text-align: right; padding: 0; margin-bottom: 10px;
-            display: flex; align-items: center; gap: 5px;
-        }
-        .tutorial-text { font-size: 12px; line-height: 1.8; color: #ddd; }
-        .tutorial-text strong { color: #FFCC00; }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 10px; }
+        .drawer-close { background: none; border: none; color: var(--accent); font-size: 20px; cursor: pointer; }
+        .drawer-item { color: var(--text-color); text-decoration: none; font-size: 15px; padding: 12px; border-radius: 8px; background: rgba(255, 204, 0, 0.1); cursor: pointer; transition: 0.2s; border: 1px solid transparent; }
+        .drawer-item:hover { background: rgba(255, 204, 0, 0.2); border-color: var(--accent); }
+        .drawer-section { display: none; flex-direction: column; gap: 10px; }
+        .drawer-section.active { display: flex; }
+        .back-btn { background: none; border: none; color: var(--accent); font-size: 14px; cursor: pointer; text-align: right; padding: 0; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+        .tutorial-text, .about-text { font-size: 12px; line-height: 1.8; color: var(--text-dim); }
+        .tutorial-text strong, .about-text strong { color: var(--accent); }
+        .about-text a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
     </style>
 </head>
 <body>
@@ -141,48 +160,80 @@
     <div class="drawer-overlay" id="drawerOverlay"></div>
     <div class="drawer" id="drawer">
         <div class="drawer-header">
-            <span style="color:#FFCC00; font-weight:bold;">منو</span>
+            <span style="color:var(--accent); font-weight:bold;">منو</span>
             <button class="drawer-close" id="drawerClose">&times;</button>
         </div>
-        
         <div id="menuMain">
             <div class="drawer-item" id="showTutorialBtn">📚 آموزش آپلود</div>
+            <div class="drawer-item" id="showAboutBtn">ℹ️ درباره سازنده</div>
         </div>
-
-        <div class="tutorial-section" id="tutorialSection">
-            <button class="tutorial-back-btn" id="backToMenuBtn">➡️ بازگشت</button>
+        <div class="drawer-section" id="tutorialSection">
+            <button class="back-btn" id="backFromTutorial">➡️ بازگشت</button>
             <div class="tutorial-text">
                 <p><strong>آموزش بخش آپلود:</strong></p>
                 <p>توی <strong>Name</strong> اسم اسکریپت رو می‌نویسید (اجباری)</p>
                 <p>توی <strong>Code</strong> خود کد اسکریپت رو می‌نویسید (اجباری)</p>
-                <p>توی <strong>Description</strong> یکم اطلاعات در مورد اسکریپتتون می‌نویسید (اجباری نیست) (لطفا اینجا خود اسکریپت رو ننویسید)</p>
-                <p>و توی <strong>Image</strong> هم عکس می‌زارید برای اسکریپتتون توی سایت (چون کار باهاش سخته اجباری نیست)</p>
-                <p>و در آخر هم دکمه آبی رنگ <strong>Submit</strong> رو برای آپلود بزنید.</p>
+                <p>توی <strong>Description</strong> یکم اطلاعات در مورد اسکریپتتون می‌نویسید (اجباری نیست)</p>
+                <p>و توی <strong>Image</strong> هم عکس می‌زارید (اجباری نیست)</p>
+                <p>و در آخر دکمه آبی <strong>Submit</strong> رو بزنید.</p>
+            </div>
+        </div>
+        <div class="drawer-section" id="aboutSection">
+            <button class="back-btn" id="backFromAbout">➡️ بازگشت</button>
+            <div class="about-text">
+                <p><strong>سازنده:</strong> TimsarHacks</p>
+                <p><strong>ابزار ساخت:</strong> HTML, CSS, JavaScript</p>
+                <p><strong>تاریخ ساخت:</strong> 1403/08/09</p>
+                <p><strong>آیدی تلگرام:</strong> <a href="https://t.me/timsarog" target="_blank">@timsarog</a></p>
+                <p><strong>چنل تلگرام:</strong> <a href="https://t.me/timsarCH" target="_blank">@timsarCH</a></p>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <!-- هدر ساده -->
         <div class="header">
             <h1>ScriptShare</h1>
-            <button class="menu-btn" id="menuOpenBtn">&#9776;</button>
+            <div class="header-btns">
+                <button class="icon-btn" id="themeToggleBtn">🌙</button>
+                <button class="icon-btn" id="menuOpenBtn">&#9776;</button>
+            </div>
         </div>
         
         <input type="text" id="searchInput" class="search-bar" placeholder="جستجوی اسکریپت...">
         
         <div id="scripts-list">
-            <p style="text-align:center; color:#ddd;">در حال بارگذاری...</p>
+            <p style="text-align:center; color:var(--text-dim);">در حال بارگذاری...</p>
         </div>
     </div>
 
-    <!-- فوتر با دکمه آپلود -->
     <div class="footer">
         <span>Timsar ScriptShare | V3.0</span>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
     </div>
 
     <script>
+        // ═══ منطق تغییر تم (Dark/Light) ═══
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const body = document.body;
+
+        // چک کردن تم ذخیره شده
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeToggleBtn.innerText = '☀️';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerText = '☀️';
+            } else {
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerText = '🌙';
+            }
+        });
+
         // ═══ منطق منوی کناری ═══
         const drawer = document.getElementById('drawer');
         const drawerOverlay = document.getElementById('drawerOverlay');
@@ -190,36 +241,24 @@
         const drawerClose = document.getElementById('drawerClose');
         const menuMain = document.getElementById('menuMain');
         const tutorialSection = document.getElementById('tutorialSection');
+        const aboutSection = document.getElementById('aboutSection');
         const showTutorialBtn = document.getElementById('showTutorialBtn');
-        const backToMenuBtn = document.getElementById('backToMenuBtn');
+        const showAboutBtn = document.getElementById('showAboutBtn');
+        const backFromTutorial = document.getElementById('backFromTutorial');
+        const backFromAbout = document.getElementById('backFromAbout');
 
-        function openDrawer() {
-            drawer.classList.add('open');
-            drawerOverlay.style.display = 'block';
+        function openDrawer() { drawer.classList.add('open'); drawerOverlay.style.display = 'block'; }
+        function closeDrawer() { 
+            drawer.classList.remove('open'); drawerOverlay.style.display = 'none'; 
+            setTimeout(() => { menuMain.style.display = 'block'; tutorialSection.classList.remove('active'); aboutSection.classList.remove('active'); }, 300); 
         }
-
-        function closeDrawer() {
-            drawer.classList.remove('open');
-            drawerOverlay.style.display = 'none';
-            setTimeout(() => {
-                menuMain.style.display = 'block';
-                tutorialSection.classList.remove('active');
-            }, 300);
-        }
-
         menuOpenBtn.addEventListener('click', openDrawer);
         drawerClose.addEventListener('click', closeDrawer);
         drawerOverlay.addEventListener('click', closeDrawer);
-
-        showTutorialBtn.addEventListener('click', () => {
-            menuMain.style.display = 'none';
-            tutorialSection.classList.add('active');
-        });
-
-        backToMenuBtn.addEventListener('click', () => {
-            tutorialSection.classList.remove('active');
-            menuMain.style.display = 'block';
-        });
+        showTutorialBtn.addEventListener('click', () => { menuMain.style.display = 'none'; tutorialSection.classList.add('active'); });
+        backFromTutorial.addEventListener('click', () => { tutorialSection.classList.remove('active'); menuMain.style.display = 'block'; });
+        showAboutBtn.addEventListener('click', () => { menuMain.style.display = 'none'; aboutSection.classList.add('active'); });
+        backFromAbout.addEventListener('click', () => { aboutSection.classList.remove('active'); menuMain.style.display = 'block'; });
 
         // ═══ منطق اسکریپت ها ═══
         const csvUrl = "https://docs.google.com/spreadsheets/d/1zQealMxZVcRvb9ZEi9OsU_ntRnsX2mMqYRO2rNuXJAY/export?format=csv";
@@ -232,7 +271,7 @@
                 const rows = data.split('\n');
                 
                 if (rows.length < 2) {
-                    document.getElementById('scripts-list').innerHTML = '<p style="text-align:center; color:#ddd;">هنوز اسکریپتی آپلود نشده.</p>';
+                    document.getElementById('scripts-list').innerHTML = '<p style="text-align:center; color:var(--text-dim);">هنوز اسکریپتی آپلود نشده.</p>';
                     return;
                 }
 
@@ -285,7 +324,7 @@
             container.innerHTML = '';
 
             if (scripts.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#ddd;">اسکریپتی یافت نشد.</p>';
+                container.innerHTML = '<p style="text-align:center; color:var(--text-dim);">اسکریپتی یافت نشد.</p>';
                 return;
             }
 
