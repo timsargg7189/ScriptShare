@@ -12,13 +12,14 @@
             color: #fff; 
             font-family: 'Vazirmatn', sans-serif; 
             padding: 20px; 
-            padding-bottom: 60px; 
+            padding-bottom: 80px; /* فضای بیشتر برای فوتر بزرگتر */
             margin: 0;
             min-height: 100vh;
         }
         
         .container { max-width: 600px; margin: auto; }
         
+        /* هدر ساده: فقط اسم و دکمه منو */
         .header { 
             display: flex; 
             justify-content: space-between; 
@@ -32,45 +33,20 @@
             box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
         }
         
-        .logo-title { display: flex; align-items: center; gap: 8px; }
-        .logo-icon { width: 40px; height: 40px; background-color: #FFCC00; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 22px; }
-        .header h1 { margin: 0; color: #FFCC00; font-size: 20px; }
+        .header h1 { margin: 0; color: #FFCC00; font-size: 22px; }
         
-        /* دکمه های هدر */
-        .header-btns {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
         .menu-btn {
             background: none;
-            border: 1px solid #FFCC00; /* یه حاشیه زرد برای دکمه منو */
+            border: 1px solid #FFCC00;
             color: #FFCC00;
             font-size: 20px;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 4px 10px;
             border-radius: 6px;
-            display: flex;
-            align-items: center;
             transition: 0.2s;
         }
         .menu-btn:hover { background: rgba(255, 204, 0, 0.1); }
 
-        .btn { 
-            background-color: #FFCC00; 
-            color: #000; 
-            padding: 8px 12px; 
-            text-decoration: none; 
-            border-radius: 6px; 
-            font-weight: bold; 
-            font-size: 12px; 
-            transition: 0.2s; 
-            white-space: nowrap;
-            display: inline-block;
-        }
-        .btn:hover { background-color: #e6b800; }
-        
         .search-bar { width: 100%; padding: 12px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #333; background: rgba(26, 26, 26, 0.85); color: #fff; box-sizing: border-box; font-family: inherit; outline: none; backdrop-filter: blur(5px); }
         .search-bar:focus { border-color: #FFCC00; }
         
@@ -86,7 +62,37 @@
         .copy-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: inherit; transition: 0.2s; }
         .copy-btn:hover { background: #45a049; }
         
-        .footer { position: fixed; bottom: 0; left: 0; width: 100%; text-align: right; padding: 12px 20px; font-size: 11px; color: #666; background: rgba(15, 15, 15, 0.9); border-top: 1px solid #222; box-sizing: border-box; backdrop-filter: blur(5px); }
+        /* فوتر جدید (کادر پایین) */
+        .footer { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            display: flex;
+            justify-content: space-between; /* فاصله بین متن و دکمه */
+            align-items: center;
+            padding: 15px 20px; 
+            font-size: 12px; 
+            color: #666; 
+            background: rgba(15, 15, 15, 0.95); 
+            border-top: 1px solid #FFCC00; /* خط زرد بالای فوتر */
+            box-sizing: border-box; 
+            backdrop-filter: blur(10px);
+        }
+
+        /* دکمه افزودن اسکریپت داخل فوتر */
+        .footer .btn { 
+            background-color: #FFCC00; 
+            color: #000; 
+            padding: 10px 15px; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 13px; 
+            transition: 0.2s; 
+            white-space: nowrap;
+        }
+        .footer .btn:hover { background-color: #e6b800; }
 
         /* ═══ منوی کناری (Drawer) ═══ */
         .drawer-overlay {
@@ -157,18 +163,10 @@
     </div>
 
     <div class="container">
+        <!-- هدر ساده -->
         <div class="header">
-            <!-- سمت راست: منو -->
+            <h1>ScriptShare</h1>
             <button class="menu-btn" id="menuOpenBtn">&#9776;</button>
-            
-            <!-- وسط: لوگو -->
-            <div class="logo-title">
-                <div class="logo-icon">👾</div>
-                <h1>ScriptShare</h1>
-            </div>
-            
-            <!-- سمت چپ: افزودن اسکریپت -->
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
         </div>
         
         <input type="text" id="searchInput" class="search-bar" placeholder="جستجوی اسکریپت...">
@@ -178,8 +176,10 @@
         </div>
     </div>
 
+    <!-- فوتر با دکمه آپلود -->
     <div class="footer">
-        Timsar ScriptShare | V3.0
+        <span>Timsar ScriptShare | V3.0</span>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
     </div>
 
     <script>
