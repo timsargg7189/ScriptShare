@@ -159,15 +159,16 @@
                 const data = await res.text();
                 const rows = data.split('\n');
                 
-                const headers = rows[0].split(',');
-                let idx = { name: 1, code: 2, desc: 3, game: 5, creator: 6 };
+                // پیدا کردن ایندکس دقیق ستون ها بر اساس اسم (نه شماره)
+                const headers = rows[0].split(',').map(h => h.toLowerCase().trim());
+                let nameIdx = -1, codeIdx = -1, descIdx = -1, gameIdx = -1, creatorIdx = -1;
+                
                 headers.forEach((h, i) => {
-                    const lh = h.toLowerCase();
-                    if (lh.includes('name') && !lh.includes('game') && !lh.includes('creator')) idx.name = i;
-                    if (lh.includes('code')) idx.code = i;
-                    if (lh.includes('desc')) idx.desc = i;
-                    if (lh.includes('game')) idx.game = i;
-                    if (lh.includes('creator')) idx.creator = i;
+                    if (h === 'name' || h.includes('name') && !h.includes('game') && !h.includes('creator')) nameIdx = i;
+                    if (h === 'code' || h.includes('code')) codeIdx = i;
+                    if (h === 'description' || h.includes('desc')) descIdx = i;
+                    if (h.includes('game name') || h.includes('game')) gameIdx = i;
+                    if (h.includes('creator name') || h.includes('creator')) creatorIdx = i;
                 });
 
                 allScripts = [];
@@ -175,11 +176,11 @@
                     if (!rows[i].trim()) continue;
                     let cols = parseCSVLine(rows[i]);
                     
-                    const name = cols[idx.name] || 'بدون نام';
-                    const desc = cols[idx.desc] || '';
-                    const code = (cols[idx.code] || '').replace(/<br>/g, '\n');
-                    const game = cols[idx.game] || 'نامشخص';
-                    const creator = cols[idx.creator] || 'ناشناس';
+                    const name = cols[nameIdx] || 'بدون نام';
+                    const desc = cols[descIdx] || '';
+                    const code = (cols[codeIdx] || '').replace(/<br>/g, '\n');
+                    const game = (gameIdx !== -1 && cols[gameIdx]) ? cols[gameIdx] : 'نامشخص';
+                    const creator = (creatorIdx !== -1 && cols[creatorIdx]) ? cols[creatorIdx] : 'ناشناس';
                     
                     if (name !== 'بدون نام' && name) {
                         allScripts.push({ name, desc, code, game, creator });
@@ -236,4 +237,4 @@
         fetchScripts();
     </script>
 </body>
-          </html>
+</html>
