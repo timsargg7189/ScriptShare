@@ -69,7 +69,7 @@
         .back-btn { background: none; border: none; color: var(--accent); font-size: 14px; cursor: pointer; text-align: right; padding: 0; }
         .text-content { font-size: 12px; line-height: 1.8; color: var(--text-dim); }
         .text-content strong { color: var(--accent); }
-        .text-content a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); }
+        .text-content a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); display: block; margin-bottom: 8px; }
     </style>
 </head>
 <body>
@@ -79,7 +79,9 @@
         <div id="menuMain">
             <div class="drawer-item" id="showTutorialBtn">📚 آموزش آپلود</div>
             <div class="drawer-item" id="showAboutBtn">ℹ️ درباره سازنده</div>
+            <div class="drawer-item" id="showDeltaBtn">🚀 آپدیت‌های دلتا</div>
         </div>
+        
         <div class="drawer-section" id="tutorialSection">
             <button class="back-btn" id="backFromTutorial">➡️ بازگشت</button>
             <div class="text-content">
@@ -91,6 +93,7 @@
                 <p>توی <strong>Creator Name</strong> اسم خودتون رو بنویسید</p>
             </div>
         </div>
+        
         <div class="drawer-section" id="aboutSection">
             <button class="back-btn" id="backFromAbout">➡️ بازگشت</button>
             <div class="text-content">
@@ -100,6 +103,19 @@
                 <p><strong>زمان سپری شده برای ساخت:</strong> ۴ ساعت</p>
                 <p><strong>آیدی تلگرام:</strong> <a href="https://t.me/timsarog" target="_blank">@timsarog</a></p>
                 <p><strong>چنل تلگرام:</strong> <a href="https://t.me/timsarCH" target="_blank">@timsarCH</a></p>
+            </div>
+        </div>
+
+        <!-- بخش جدید: آپدیت های دلتا -->
+        <div class="drawer-section" id="deltaSection">
+            <button class="back-btn" id="backFromDelta">➡️ بازگشت</button>
+            <div class="text-content">
+                <p><strong>🚀 آپدیت‌های دلتا (Delta Executor):</strong></p>
+                <p>برای دانلود و استفاده از جدیدترین نسخه دلتا، از لینک‌های زیر استفاده کنید:</p>
+                <br>
+                <a href="https://delta-executor.com/download/" target="_blank">📥 دانلود رسمی دلتا</a>
+                <a href="https://t.me/delta1yad2begir/638" target="_blank">📦 دانلود فایل از چنل تلگرام</a>
+                <a href="https://t.me/delta1yad2begir/238" target="_blank">📚 آموزش فعال کردن اسکریپت</a>
             </div>
         </div>
     </div>
@@ -136,18 +152,22 @@
         // ═══ منو ═══
         const drawer = document.getElementById('drawer'), drawerOverlay = document.getElementById('drawerOverlay');
         const menuOpenBtn = document.getElementById('menuOpenBtn'), drawerClose = document.getElementById('drawerClose');
-        const menuMain = document.getElementById('menuMain'), tutorialSection = document.getElementById('tutorialSection'), aboutSection = document.getElementById('aboutSection');
+        const menuMain = document.getElementById('menuMain'), tutorialSection = document.getElementById('tutorialSection'), aboutSection = document.getElementById('aboutSection'), deltaSection = document.getElementById('deltaSection');
         
         menuOpenBtn.addEventListener('click', () => { drawer.classList.add('open'); drawerOverlay.style.display = 'block'; });
         drawerClose.addEventListener('click', () => { drawer.classList.remove('open'); drawerOverlay.style.display = 'none'; resetMenu(); });
         drawerOverlay.addEventListener('click', () => { drawer.classList.remove('open'); drawerOverlay.style.display = 'none'; resetMenu(); });
         
-        function resetMenu() { setTimeout(() => { menuMain.style.display = 'block'; tutorialSection.classList.remove('active'); aboutSection.classList.remove('active'); }, 300); }
+        function resetMenu() { setTimeout(() => { menuMain.style.display = 'block'; tutorialSection.classList.remove('active'); aboutSection.classList.remove('active'); deltaSection.classList.remove('active'); }, 300); }
         
         document.getElementById('showTutorialBtn').addEventListener('click', () => { menuMain.style.display = 'none'; tutorialSection.classList.add('active'); });
         document.getElementById('backFromTutorial').addEventListener('click', () => { tutorialSection.classList.remove('active'); menuMain.style.display = 'block'; });
         document.getElementById('showAboutBtn').addEventListener('click', () => { menuMain.style.display = 'none'; aboutSection.classList.add('active'); });
         document.getElementById('backFromAbout').addEventListener('click', () => { aboutSection.classList.remove('active'); menuMain.style.display = 'block'; });
+        
+        // بخش دلتا
+        document.getElementById('showDeltaBtn').addEventListener('click', () => { menuMain.style.display = 'none'; deltaSection.classList.add('active'); });
+        document.getElementById('backFromDelta').addEventListener('click', () => { deltaSection.classList.remove('active'); menuMain.style.display = 'block'; });
 
         // ═══ اطلاعات ═══
         const csvUrl = "https://docs.google.com/spreadsheets/d/1zQealMxZVcRvb9ZEi9OsU_ntRnsX2mMqYRO2rNuXJAY/export?format=csv";
@@ -159,14 +179,10 @@
                 const data = await res.text();
                 const rows = data.split('\n');
                 
-                // پیدا کردن ستون‌ها بر اساس اسم در ردیف اول
                 const headers = rows[0].split(',').map(h => h.toLowerCase().trim());
-                
                 const findIndex = (names) => {
                     for (let i = 0; i < headers.length; i++) {
-                        for (let name of names) {
-                            if (headers[i].includes(name)) return i;
-                        }
+                        for (let name of names) { if (headers[i].includes(name)) return i; }
                     }
                     return -1;
                 };
@@ -182,14 +198,12 @@
                     if (!rows[i].trim()) continue;
                     let cols = parseCSVLine(rows[i]);
                     
-                    // فقط ستون‌های اصلی رو بخون
                     const name = cols[nameIdx] || 'بدون نام';
                     const code = cols[codeIdx] || 'بدون کد';
                     const desc = cols[descIdx] || '';
                     const game = (gameIdx !== -1 && cols[gameIdx]) ? cols[gameIdx] : 'نامشخص';
                     const creator = (creatorIdx !== -1 && cols[creatorIdx]) ? cols[creatorIdx] : 'ناشناس';
                     
-                    // اگه اسم اسکریپت خالی یا لینک بود، رد کن
                     if (name === 'بدون نام' || name.includes('http') || name.includes('.com')) continue;
 
                     allScripts.push({ name, desc, code: code.replace(/<br>/g, '\n'), game, creator });
@@ -219,9 +233,7 @@
                 card.className = 'card';
                 
                 card.innerHTML = `
-                    <div class="card-header">
-                        <h3>${s.name}</h3>
-                    </div>
+                    <div class="card-header"><h3>${s.name}</h3></div>
                     <div class="meta-info">
                         <span class="meta-item">🎮 ${s.game}</span>
                         <span class="meta-item">👤 ${s.creator}</span>
@@ -245,4 +257,4 @@
         fetchScripts();
     </script>
 </body>
-    </html>
+</html>
