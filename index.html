@@ -9,12 +9,16 @@
         .container { max-width: 600px; margin: auto; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .btn { background-color: #FFCC00; color: #000; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; border: none; cursor: pointer; }
+        .search-bar { width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #333; background: #1e1e1e; color: #fff; box-sizing: border-box; }
         .card { background-color: #1e1e1e; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333; }
         .card h3 { margin-top: 0; color: #FFCC00; }
         .card p { font-size: 14px; color: #ccc; }
         .card pre { background: #000; padding: 10px; overflow-x: auto; border-radius: 5px; font-size: 12px; border: 1px solid #444; white-space: pre-wrap; }
-        .copy-btn { background: #4caf50; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; float: left; margin-top: 10px; }
+        .action-btns { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+        .copy-btn { background: #4caf50; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .copy-btn:hover { background: #45a049; }
+        .like-btn { background: #333; color: #fff; border: 1px solid #555; padding: 8px 12px; border-radius: 4px; cursor: pointer; }
+        .like-btn:hover { background: #444; }
     </style>
 </head>
 <body>
@@ -23,6 +27,9 @@
             <h1>ScriptShare</h1>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
         </div>
+        
+        <input type="text" id="searchInput" class="search-bar" placeholder="جستجوی اسکریپت...">
+        
         <div id="scripts-list">
             <p>در حال بارگذاری...</p>
         </div>
@@ -30,6 +37,7 @@
 
     <script>
         const csvUrl = "https://docs.google.com/spreadsheets/d/1zQealMxZVcRvb9ZEi9OsU_ntRnsX2mMqYRO2rNuXJAY/export?format=csv";
+        let allScripts = [];
 
         async function fetchScripts() {
             try {
@@ -42,9 +50,9 @@
                     return;
                 }
 
+                // پیدا کردن ایندکس ستون‌ها بر اساس اسم سرستون
                 const headers = rows[0].split(',');
-                let nameIdx = 1, descIdx = 3, codeIdx = 2; // پیش‌فرض
-                
+                let nameIdx = 1, descIdx = 3, codeIdx = 2;
                 headers.forEach((h, i) => {
                     const lowerH = h.toLowerCase();
                     if (lowerH.includes('name')) nameIdx = i;
@@ -52,34 +60,73 @@
                     if (lowerH.includes('code')) codeIdx = i;
                 });
 
-                const container = document.getElementById('scripts-list');
-                container.innerHTML = '';
+                allScripts = [];
 
                 for (let i = 1; i < rows.length; i++) {
                     if (!rows[i].trim()) continue;
-                    // این regex برای جدا کردن ستون‌ها با در نظر گرفتن کاماهای داخل متن
-                    const columns = rows[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
                     
-                    const name = columns[nameIdx]?.replace(/"/g, '') || 'بدون نام';
-                    const desc = columns[descIdx]?.replace(/"/g, '') || 'بدون توضیحات';
-                    let code = columns[codeIdx]?.replace(/"/g, '') || 'بدون کد';
+                    // روش جدید برای جدا کردن ستون‌ها با در نظر گرفتن فاصله‌ها و کاماها
+                    // این بخش رو ساده‌تر کردم که فاصله‌ها رو خراب نکنه
+                    let currentLine = rows[i];
+                    let cols = [];
+                    let inQuotes = false;
+                    let currentCol = '';
+
+                    for (let char of currentLine) {
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            cols.push(currentCol);
+                            currentCol = '';
+                        } else {
+                            currentCol += char;
+                        }
+                    }
+                    cols.push(currentCol);
+
+                    // پاک کردن کوتیشن‌های اضافی
+                    cols = cols.map(c => c.replace(/^"|"$/g, ''));
+
+                    const name = cols[nameIdx] || 'بدون نام';
+                    const desc = cols[descIdx] || 'بدون توضیحات';
+                    let code = cols[codeIdx] || 'بدون کد';
                     code = code.replace(/<br>/g, '\n');
 
                     if (name === 'بدون نام' || !name) continue;
 
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <h3>${name}</h3>
-                        <p>${desc}</p>
-                        <pre><code>${code}</code></pre>
-                        <button class="copy-btn" onclick="copyText(\`${code}\`)">کپی کد</button>
-                    `;
-                    container.appendChild(card);
+                    allScripts.push({ name, desc, code });
                 }
+
+                renderScripts(allScripts);
             } catch (e) {
-                document.getElementById('scripts-list').innerHTML = '<p>خطا در دریافت اطلاعات. لطفا اتصال اینترنت را بررسی کنید.</p>';
+                console.error(e);
+                document.getElementById('scripts-list').innerHTML = '<p>خطا در دریافت اطلاعات.</p>';
             }
+        }
+
+        function renderScripts(scripts) {
+            const container = document.getElementById('scripts-list');
+            container.innerHTML = '';
+
+            if (scripts.length === 0) {
+                container.innerHTML = '<p>اسکریپتی یافت نشد.</p>';
+                return;
+            }
+
+            scripts.forEach(script => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${script.name}</h3>
+                    <p>${script.desc}</p>
+                    <pre><code>${script.code}</code></pre>
+                    <div class="action-btns">
+                        <button class="copy-btn" onclick="copyText(\`${script.code.replace(/`/g, '\\`')}\`)">کپی کد</button>
+                        <button class="like-btn" onclick="likeScript(this)">❤️ 0</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
 
         function copyText(text) {
@@ -87,6 +134,20 @@
                 alert('کد کپی شد!');
             });
         }
+
+        function likeScript(btn) {
+            // فقط برای نمایش است (چون دیتابیس نداریم)
+            let count = parseInt(btn.innerText.split(' ')[1]) || 0;
+            btn.innerText = `❤️ ${count + 1}`;
+            btn.style.color = '#ff4d4d';
+        }
+
+        // جستجو
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allScripts.filter(s => s.name.toLowerCase().includes(query));
+            renderScripts(filtered);
+        });
 
         fetchScripts();
     </script>
