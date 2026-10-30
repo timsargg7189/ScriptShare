@@ -8,7 +8,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
         
         body { 
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://i.postimg.cc/TwQdQPH3/file-00000000e19482308de4c5157b79d241.png');
+            /* بک گراند: عکس نوآب با چاقو */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -22,10 +23,7 @@
             min-height: 100vh;
         }
         
-        .container { 
-            max-width: 600px; 
-            margin: auto; 
-        }
+        .container { max-width: 600px; margin: auto; }
         
         .header { 
             display: flex; 
@@ -39,150 +37,68 @@
             backdrop-filter: blur(5px);
         }
         
-        .logo-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .logo-title { display: flex; align-items: center; gap: 10px; }
+        
+        /* لوگو: عکس تام و جری */
+        .logo-title img { 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 10px; 
+            object-fit: cover; 
         }
-
-        .logo-title img {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
-        .header h1 { 
-            margin: 0; 
-            color: #FFCC00; 
-            font-size: 22px;
-        }
+        
+        .header h1 { margin: 0; color: #FFCC00; font-size: 22px; }
         
         .btn { 
-            background-color: #FFCC00; 
-            color: #000; 
-            padding: 10px 15px; 
-            text-decoration: none; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            font-size: 14px;
-            transition: 0.2s;
+            background-color: #FFCC00; color: #000; padding: 10px 15px; 
+            text-decoration: none; border-radius: 8px; font-weight: bold; 
+            font-size: 14px; transition: 0.2s;
         }
-        
-        .btn:hover {
-            background-color: #e6b800;
-        }
+        .btn:hover { background-color: #e6b800; }
         
         .search-bar { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 25px; 
-            border-radius: 8px; 
-            border: 1px solid #333; 
-            background: rgba(26, 26, 26, 0.85);
-            color: #fff; 
-            box-sizing: border-box; 
-            font-family: inherit;
-            outline: none;
-            backdrop-filter: blur(5px);
+            width: 100%; padding: 12px; margin-bottom: 25px; border-radius: 8px; 
+            border: 1px solid #333; background: rgba(26, 26, 26, 0.85);
+            color: #fff; box-sizing: border-box; font-family: inherit; 
+            outline: none; backdrop-filter: blur(5px);
         }
-        
-        .search-bar:focus {
-            border-color: #FFCC00;
-        }
+        .search-bar:focus { border-color: #FFCC00; }
         
         .card { 
-            background-color: rgba(26, 26, 26, 0.85);
-            padding: 20px; 
-            border-radius: 12px; 
-            margin-bottom: 20px; 
-            border: 1px solid #2a2a2a; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
+            background-color: rgba(26, 26, 26, 0.85); padding: 20px; 
+            border-radius: 12px; margin-bottom: 20px; border: 1px solid #2a2a2a; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); backdrop-filter: blur(5px);
         }
-        
-        .card h3 { 
-            margin-top: 0; 
-            color: #FFCC00; 
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-        
+        .card h3 { margin-top: 0; color: #FFCC00; margin-bottom: 10px; font-size: 18px; }
         .card p { 
-            font-size: 13px; 
-            color: #ddd;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            word-break: break-word;
+            font-size: 13px; color: #ddd; line-height: 1.6; margin-bottom: 15px;
+            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+            overflow: hidden; text-overflow: ellipsis; word-break: break-word;
         }
         
         .code-container {
-            background: rgba(0, 0, 0, 0.7); 
-            border-radius: 8px; 
-            border: 1px solid #333;
-            margin-bottom: 15px;
-            overflow: hidden;
+            background: rgba(0, 0, 0, 0.7); border-radius: 8px; 
+            border: 1px solid #333; margin-bottom: 15px; overflow: hidden;
         }
-        
         .card pre { 
-            margin: 0;
-            padding: 15px; 
-            overflow-x: auto; 
-            font-size: 12px; 
-            white-space: pre-wrap; 
-            word-wrap: break-word;
-            max-height: 150px;
+            margin: 0; padding: 15px; overflow-x: auto; font-size: 12px; 
+            white-space: pre-wrap; word-wrap: break-word; max-height: 150px;
         }
-        
-        .card pre::-webkit-scrollbar {
-            height: 6px;
-            width: 6px;
-        }
-        .card pre::-webkit-scrollbar-thumb {
-            background: #444; 
-            border-radius: 3px;
-        }
-        
-        .action-btns { 
-            display: flex; 
-            justify-content: flex-start; 
-            align-items: center; 
-        }
+        .card pre::-webkit-scrollbar { height: 6px; width: 6px; }
+        .card pre::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
         
         .copy-btn { 
-            background: #4caf50; 
-            color: white; 
-            border: none; 
-            padding: 10px 20px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-family: inherit;
-            transition: 0.2s;
+            background: #4caf50; color: white; border: none; padding: 10px 20px; 
+            border-radius: 6px; cursor: pointer; font-weight: bold; 
+            font-family: inherit; transition: 0.2s;
         }
-        
-        .copy-btn:hover { 
-            background: #45a049; 
-        }
+        .copy-btn:hover { background: #45a049; }
         
         .footer { 
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            width: 100%; 
-            text-align: right; 
-            padding: 12px 20px; 
-            font-size: 11px; 
-            color: #666; 
-            background: rgba(15, 15, 15, 0.9); 
-            border-top: 1px solid #222; 
-            box-sizing: border-box; 
-            backdrop-filter: blur(5px);
+            position: fixed; bottom: 0; left: 0; width: 100%; text-align: right; 
+            padding: 12px 20px; font-size: 11px; color: #666; 
+            background: rgba(15, 15, 15, 0.9); border-top: 1px solid #222; 
+            box-sizing: border-box; backdrop-filter: blur(5px);
         }
     </style>
 </head>
@@ -190,7 +106,8 @@
     <div class="container">
         <div class="header">
             <div class="logo-title">
-                <img src="https://i.postimg.cc/9MPR2VgX/y2k-1792590018289.jpg" alt="Logo">
+                <!-- لوگو با Base64 -->
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=" alt="Logo">
                 <h1>ScriptShare</h1>
             </div>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
@@ -242,14 +159,9 @@
                     let currentCol = '';
 
                     for (let char of currentLine) {
-                        if (char === '"') {
-                            inQuotes = !inQuotes;
-                        } else if (char === ',' && !inQuotes) {
-                            cols.push(currentCol);
-                            currentCol = '';
-                        } else {
-                            currentCol += char;
-                        }
+                        if (char === '"') { inQuotes = !inQuotes; } 
+                        else if (char === ',' && !inQuotes) { cols.push(currentCol); currentCol = ''; } 
+                        else { currentCol += char; }
                     }
                     cols.push(currentCol);
                     cols = cols.map(c => c.replace(/^"|"$/g, ''));
