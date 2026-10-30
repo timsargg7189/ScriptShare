@@ -159,28 +159,40 @@
                 const data = await res.text();
                 const rows = data.split('\n');
                 
-                // ایندکس ستون‌ها بر اساس عکس جدیدت (شروع از 0):
-                // A=0, B=1, C=2, D=3, E=4 (Game Name), F=5 (Creator Name)
-                const nameIdx = 1;
-                const codeIdx = 2;
-                const descIdx = 3;
-                const gameIdx = 4;
-                const creatorIdx = 5;
+                // پیدا کردن ستون‌ها بر اساس اسم در ردیف اول
+                const headers = rows[0].split(',').map(h => h.toLowerCase().trim());
+                
+                const findIndex = (names) => {
+                    for (let i = 0; i < headers.length; i++) {
+                        for (let name of names) {
+                            if (headers[i].includes(name)) return i;
+                        }
+                    }
+                    return -1;
+                };
+
+                const nameIdx = findIndex(['name']);
+                const codeIdx = findIndex(['code']);
+                const descIdx = findIndex(['description', 'desc']);
+                const gameIdx = findIndex(['game name', 'game']);
+                const creatorIdx = findIndex(['creator name', 'creator']);
 
                 allScripts = [];
                 for (let i = 1; i < rows.length; i++) {
                     if (!rows[i].trim()) continue;
                     let cols = parseCSVLine(rows[i]);
                     
+                    // فقط ستون‌های اصلی رو بخون
                     const name = cols[nameIdx] || 'بدون نام';
+                    const code = cols[codeIdx] || 'بدون کد';
                     const desc = cols[descIdx] || '';
-                    const code = (cols[codeIdx] || '').replace(/<br>/g, '\n');
-                    const game = cols[gameIdx] || 'نامشخص';
-                    const creator = cols[creatorIdx] || 'ناشناس';
+                    const game = (gameIdx !== -1 && cols[gameIdx]) ? cols[gameIdx] : 'نامشخص';
+                    const creator = (creatorIdx !== -1 && cols[creatorIdx]) ? cols[creatorIdx] : 'ناشناس';
                     
-                    if (name !== 'بدون نام' && name) {
-                        allScripts.push({ name, desc, code, game, creator });
-                    }
+                    // اگه اسم اسکریپت خالی یا لینک بود، رد کن
+                    if (name === 'بدون نام' || name.includes('http') || name.includes('.com')) continue;
+
+                    allScripts.push({ name, desc, code: code.replace(/<br>/g, '\n'), game, creator });
                 }
                 renderScripts(allScripts);
             } catch (e) { document.getElementById('scripts-list').innerHTML = '<p style="text-align:center; color:red;">خطا در دریافت اطلاعات.</p>'; }
@@ -233,4 +245,4 @@
         fetchScripts();
     </script>
 </body>
-</html>
+    </html>
