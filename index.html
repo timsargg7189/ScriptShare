@@ -35,17 +35,33 @@
             try {
                 const response = await fetch(csvUrl);
                 const data = await response.text();
-                const rows = data.split('\n').slice(1);
+                const rows = data.split('\n');
+                
+                // پیدا کردن ردیف سرستون‌ها برای فهمیدن شماره ستون‌ها
+                const headers = rows[0].split(',');
+                let nameIdx = -1, descIdx = -1, codeIdx = -1;
+                
+                headers.forEach((h, i) => {
+                    if (h.toLowerCase().includes('name')) nameIdx = i;
+                    if (h.toLowerCase().includes('desc')) descIdx = i;
+                    if (h.toLowerCase().includes('code')) codeIdx = i;
+                });
+
                 const container = document.getElementById('scripts-list');
                 container.innerHTML = '';
 
-                rows.forEach(row => {
-                    if (!row.trim()) return;
-                    const columns = row.split(',');
-                    const name = columns[1] || 'بدون نام';
-                    const desc = columns[2] || 'بدون توضیحات';
-                    let code = columns[3] ? columns[3].replace(/"/g, '') : 'بدون کد';
+                // از ردیف دوم به بعد (اسکریپت‌ها)
+                for (let i = 1; i < rows.length; i++) {
+                    if (!rows[i].trim()) continue;
+                    // این regex برای هندل کردن کاماهای داخل متن یا کد هست
+                    const columns = rows[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
+                    
+                    const name = nameIdx !== -1 ? columns[nameIdx]?.replace(/"/g, '') : 'بدون نام';
+                    const desc = descIdx !== -1 ? columns[descIdx]?.replace(/"/g, '') : 'بدون توضیحات';
+                    let code = codeIdx !== -1 ? columns[codeIdx]?.replace(/"/g, '') : 'بدون کد';
                     code = code.replace(/<br>/g, '\n');
+
+                    if (name === 'بدون نام') continue; // جلوگیری از نمایش ردیف خالی
 
                     const card = document.createElement('div');
                     card.className = 'card';
@@ -56,9 +72,9 @@
                         <button class="copy-btn" onclick="copyText(\`${code}\`)">کپی کد</button>
                     `;
                     container.appendChild(card);
-                });
+                }
             } catch (e) {
-                document.getElementById('scripts-list').innerHTML = '<p>خطا در دریافت اطلاعات از گوگل شیت.</p>';
+                document.getElementById('scripts-list').innerHTML = '<p>خطا در دریافت اطلاعات.</p>';
             }
         }
 
