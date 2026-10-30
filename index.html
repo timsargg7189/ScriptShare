@@ -24,7 +24,7 @@
             justify-content: space-between; 
             align-items: center; 
             margin-bottom: 25px; 
-            padding: 15px;
+            padding: 12px 15px;
             background-color: rgba(26, 26, 26, 0.85);
             border-radius: 12px;
             border: 1px solid #FFCC00;
@@ -32,9 +32,9 @@
             box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
         }
         
-        .logo-title { display: flex; align-items: center; gap: 10px; }
-        .logo-icon { width: 45px; height: 45px; background-color: #FFCC00; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 24px; }
-        .header h1 { margin: 0; color: #FFCC00; font-size: 22px; }
+        .logo-title { display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 40px; height: 40px; background-color: #FFCC00; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 22px; }
+        .header h1 { margin: 0; color: #FFCC00; font-size: 20px; }
         
         /* دکمه های هدر */
         .header-btns {
@@ -45,16 +45,30 @@
 
         .menu-btn {
             background: none;
-            border: none;
+            border: 1px solid #FFCC00; /* یه حاشیه زرد برای دکمه منو */
             color: #FFCC00;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
-            padding: 0;
+            padding: 4px 8px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
+            transition: 0.2s;
         }
+        .menu-btn:hover { background: rgba(255, 204, 0, 0.1); }
 
-        .btn { background-color: #FFCC00; color: #000; padding: 8px 12px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 12px; transition: 0.2s; white-space: nowrap; }
+        .btn { 
+            background-color: #FFCC00; 
+            color: #000; 
+            padding: 8px 12px; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            font-size: 12px; 
+            transition: 0.2s; 
+            white-space: nowrap;
+            display: inline-block;
+        }
         .btn:hover { background-color: #e6b800; }
         
         .search-bar { width: 100%; padding: 12px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #333; background: rgba(26, 26, 26, 0.85); color: #fff; box-sizing: border-box; font-family: inherit; outline: none; backdrop-filter: blur(5px); }
@@ -95,28 +109,24 @@
         .drawer-close { background: none; border: none; color: #FFCC00; font-size: 20px; cursor: pointer; }
         
         .drawer-item {
-            color: #fff; text-decoration: none; font-size: 16px; padding: 10px;
+            color: #fff; text-decoration: none; font-size: 15px; padding: 12px;
             border-radius: 8px; background: rgba(255, 204, 0, 0.1); cursor: pointer;
             transition: 0.2s; border: 1px solid transparent;
         }
         .drawer-item:hover { background: rgba(255, 204, 0, 0.2); border-color: #FFCC00; }
 
-        /* ═══ بخش آموزش (داخل منو) ═══ */
+        /* ═══ بخش آموزش ═══ */
         .tutorial-section {
-            display: none; /* در ابتدا مخفی */
+            display: none;
             flex-direction: column; gap: 10px;
         }
-        .tutorial-section.active {
-            display: flex;
-        }
+        .tutorial-section.active { display: flex; }
         .tutorial-back-btn {
             background: none; border: none; color: #FFCC00; font-size: 14px;
             cursor: pointer; text-align: right; padding: 0; margin-bottom: 10px;
             display: flex; align-items: center; gap: 5px;
         }
-        .tutorial-text {
-            font-size: 12px; line-height: 1.8; color: #ddd;
-        }
+        .tutorial-text { font-size: 12px; line-height: 1.8; color: #ddd; }
         .tutorial-text strong { color: #FFCC00; }
     </style>
 </head>
@@ -129,13 +139,10 @@
             <button class="drawer-close" id="drawerClose">&times;</button>
         </div>
         
-        <!-- محتوای اصلی منو -->
         <div id="menuMain">
             <div class="drawer-item" id="showTutorialBtn">📚 آموزش آپلود</div>
-            <!-- اینجا می‌تونی بعدا گزینه های دیگه اضافه کنی -->
         </div>
 
-        <!-- بخش آموزش -->
         <div class="tutorial-section" id="tutorialSection">
             <button class="tutorial-back-btn" id="backToMenuBtn">➡️ بازگشت</button>
             <div class="tutorial-text">
@@ -151,14 +158,17 @@
 
     <div class="container">
         <div class="header">
+            <!-- سمت راست: منو -->
+            <button class="menu-btn" id="menuOpenBtn">&#9776;</button>
+            
+            <!-- وسط: لوگو -->
             <div class="logo-title">
                 <div class="logo-icon">👾</div>
                 <h1>ScriptShare</h1>
             </div>
-            <div class="header-btns">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
-                <button class="menu-btn" id="menuOpenBtn">&#9776;</button>
-            </div>
+            
+            <!-- سمت چپ: افزودن اسکریپت -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
         </div>
         
         <input type="text" id="searchInput" class="search-bar" placeholder="جستجوی اسکریپت...">
@@ -191,7 +201,6 @@
         function closeDrawer() {
             drawer.classList.remove('open');
             drawerOverlay.style.display = 'none';
-            // ریست کردن منو به حالت اولیه
             setTimeout(() => {
                 menuMain.style.display = 'block';
                 tutorialSection.classList.remove('active');
@@ -202,19 +211,17 @@
         drawerClose.addEventListener('click', closeDrawer);
         drawerOverlay.addEventListener('click', closeDrawer);
 
-        // نمایش بخش آموزش
         showTutorialBtn.addEventListener('click', () => {
             menuMain.style.display = 'none';
             tutorialSection.classList.add('active');
         });
 
-        // برگشت از آموزش به منوی اصلی
         backToMenuBtn.addEventListener('click', () => {
             tutorialSection.classList.remove('active');
             menuMain.style.display = 'block';
         });
 
-        // ═══ منطق دریافت اسکریپت ها ═══
+        // ═══ منطق اسکریپت ها ═══
         const csvUrl = "https://docs.google.com/spreadsheets/d/1zQealMxZVcRvb9ZEi9OsU_ntRnsX2mMqYRO2rNuXJAY/export?format=csv";
         let allScripts = [];
 
