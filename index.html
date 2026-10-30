@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptShare</title>
+    <style>
+        body { background-color: #121212; color: #fff; font-family: sans-serif; padding: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn { background-color: #FFCC00; color: #000; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; border: none; cursor: pointer; }
+        .card { background-color: #1e1e1e; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #333; }
+        .card h3 { margin-top: 0; color: #FFCC00; }
+        .card p { font-size: 14px; color: #ccc; }
+        .card pre { background: #000; padding: 10px; overflow-x: auto; border-radius: 5px; font-size: 12px; border: 1px solid #444; white-space: pre-wrap; }
+        .copy-btn { background: #4caf50; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; float: left; margin-top: 10px; }
+        .copy-btn:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ScriptShare</h1>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
+        </div>
+        <div id="scripts-list">
+            <p>در حال بارگذاری...</p>
+        </div>
+    </div>
+
+    <script>
+        const csvUrl = "https://docs.google.com/spreadsheets/d/1zQealMxZVcRvb9ZEi9OsU_ntRnsX2mMqYRO2rNuXJAY/export?format=csv";
+
+        async function fetchScripts() {
+            try {
+                const response = await fetch(csvUrl);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1);
+                const container = document.getElementById('scripts-list');
+                container.innerHTML = '';
+
+                rows.forEach(row => {
+                    if (!row.trim()) return;
+                    const columns = row.split(',');
+                    const name = columns[1] || 'بدون نام';
+                    const desc = columns[2] || 'بدون توضیحات';
+                    let code = columns[3] ? columns[3].replace(/"/g, '') : 'بدون کد';
+                    code = code.replace(/<br>/g, '\n');
+
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <h3>${name}</h3>
+                        <p>${desc}</p>
+                        <pre><code>${code}</code></pre>
+                        <button class="copy-btn" onclick="copyText(\`${code}\`)">کپی کد</button>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (e) {
+                document.getElementById('scripts-list').innerHTML = '<p>خطا در دریافت اطلاعات از گوگل شیت.</p>';
+            }
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('کد کپی شد!');
+            });
+        }
+
+        fetchScripts();
+    </script>
+</body>
+</html>
