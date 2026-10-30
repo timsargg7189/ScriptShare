@@ -37,31 +37,35 @@
                 const data = await response.text();
                 const rows = data.split('\n');
                 
-                // پیدا کردن ردیف سرستون‌ها برای فهمیدن شماره ستون‌ها
+                if (rows.length < 2) {
+                    document.getElementById('scripts-list').innerHTML = '<p>هنوز اسکریپتی آپلود نشده.</p>';
+                    return;
+                }
+
                 const headers = rows[0].split(',');
-                let nameIdx = -1, descIdx = -1, codeIdx = -1;
+                let nameIdx = 1, descIdx = 3, codeIdx = 2; // پیش‌فرض
                 
                 headers.forEach((h, i) => {
-                    if (h.toLowerCase().includes('name')) nameIdx = i;
-                    if (h.toLowerCase().includes('desc')) descIdx = i;
-                    if (h.toLowerCase().includes('code')) codeIdx = i;
+                    const lowerH = h.toLowerCase();
+                    if (lowerH.includes('name')) nameIdx = i;
+                    if (lowerH.includes('desc')) descIdx = i;
+                    if (lowerH.includes('code')) codeIdx = i;
                 });
 
                 const container = document.getElementById('scripts-list');
                 container.innerHTML = '';
 
-                // از ردیف دوم به بعد (اسکریپت‌ها)
                 for (let i = 1; i < rows.length; i++) {
                     if (!rows[i].trim()) continue;
-                    // این regex برای هندل کردن کاماهای داخل متن یا کد هست
+                    // این regex برای جدا کردن ستون‌ها با در نظر گرفتن کاماهای داخل متن
                     const columns = rows[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || [];
                     
-                    const name = nameIdx !== -1 ? columns[nameIdx]?.replace(/"/g, '') : 'بدون نام';
-                    const desc = descIdx !== -1 ? columns[descIdx]?.replace(/"/g, '') : 'بدون توضیحات';
-                    let code = codeIdx !== -1 ? columns[codeIdx]?.replace(/"/g, '') : 'بدون کد';
+                    const name = columns[nameIdx]?.replace(/"/g, '') || 'بدون نام';
+                    const desc = columns[descIdx]?.replace(/"/g, '') || 'بدون توضیحات';
+                    let code = columns[codeIdx]?.replace(/"/g, '') || 'بدون کد';
                     code = code.replace(/<br>/g, '\n');
 
-                    if (name === 'بدون نام') continue; // جلوگیری از نمایش ردیف خالی
+                    if (name === 'بدون نام' || !name) continue;
 
                     const card = document.createElement('div');
                     card.className = 'card';
@@ -74,7 +78,7 @@
                     container.appendChild(card);
                 }
             } catch (e) {
-                document.getElementById('scripts-list').innerHTML = '<p>خطا در دریافت اطلاعات.</p>';
+                document.getElementById('scripts-list').innerHTML = '<p>خطا در دریافت اطلاعات. لطفا اتصال اینترنت را بررسی کنید.</p>';
             }
         }
 
