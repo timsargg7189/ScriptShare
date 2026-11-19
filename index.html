@@ -19,8 +19,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: var(--bg);
+            /* زوم عکس کم شد و کامل دیده میشه */
             background-image: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.85)), url('IMG_20261119_150146_656.jpg'); 
-            background-size: cover;
+            background-size: 100% 100%; 
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
@@ -33,6 +34,7 @@
         @keyframes float { from { transform: translateY(100vh) scale(0); } to { transform: translateY(-10vh) scale(1.5); } }
 
         .container { max-width: 650px; margin: auto; position: relative; z-index: 2; }
+        
         .header {
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 25px; padding: 15px 20px; background: var(--panel);
@@ -40,14 +42,8 @@
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.02);
             transition: all 0.3s; position: relative; overflow: hidden;
+            /* نور چرخان (::before) حذف شد */
         }
-        .header::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(from 0deg, transparent, var(--accent), transparent 30%);
-            animation: rotate 4s linear infinite; opacity: 0; transition: opacity 0.3s;
-        }
-        .header:hover::before { opacity: 0.2; }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .header h1 {
             font-size: 26px; font-weight: 900; z-index: 1; position: relative;
             background: linear-gradient(90deg, var(--accent), #fff, var(--accent));
@@ -112,7 +108,15 @@
         .compact-mode .card.open .copy-btn { display: block; width: calc(100% - 40px); margin: 0 20px 20px 20px; }
 
         .footer { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; font-size: 13px; color: var(--dim); background: var(--panel); backdrop-filter: blur(20px); border-top: 1px solid var(--border); z-index: 100; }
-        .footer .btn { background: var(--accent); color: var(--btn-text); padding: 12px 25px; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 14px; transition: all 0.3s; }
+        
+        /* دکمه فوتر کوچیک و یک خطی شد */
+        .footer .btn { 
+            background: var(--accent); color: var(--btn-text); padding: 10px 15px; 
+            text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 13px; 
+            white-space: nowrap; transition: all 0.3s; 
+        }
+        .footer .btn:hover { transform: translateY(-3px) scale(1.05); }
+        
         .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 998; display: none; backdrop-filter: blur(8px); }
         .drawer { position: fixed; top: 0; right: -350px; width: 300px; height: 100%; background: var(--panel); backdrop-filter: blur(25px); z-index: 999; transition: right 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border-left: 1px solid var(--border); padding: 25px 20px; display: flex; flex-direction: column; gap: 15px; }
         .drawer.open { right: 0; }
