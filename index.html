@@ -18,7 +18,13 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background-color: var(--bg); color: var(--text); font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg);
+            background-image: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.85)), url('IMG_20261119_150146_656.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: var(--text); font-family: 'Vazirmatn', sans-serif;
             padding: 20px; padding-bottom: 90px; min-height: 100vh;
             transition: background 0.5s, color 0.3s; overflow-x: hidden;
         }
@@ -72,7 +78,9 @@
             cursor: pointer; transition: all 0.3s; display: flex;
             align-items: center; justify-content: center; font-size: 20px;
         }
-        .view-toggle-btn:hover { background: var(--accent); color: var(--btn-text); }        .card {
+        .view-toggle-btn:hover { background: var(--accent); color: var(--btn-text); }
+
+        .card {
             background: var(--panel); padding: 25px; border-radius: 20px; margin-bottom: 25px;
             border: 1px solid var(--border); backdrop-filter: blur(20px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.3s ease;
@@ -195,56 +203,58 @@
     <div class="footer">
         <span>Timsar ScriptShare | V4.0 QUANTUM</span>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
-    </div><script>
-    const particlesContainer = document.getElementById('particles');
-    for (let i = 0; i < 20; i++) {
-        const p = document.createElement('div');
-        p.className = 'particle';
-        p.style.width = p.style.height = Math.random() * 5 + 2 + 'px';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.animationDuration = Math.random() * 10 + 10 + 's';
-        p.style.animationDelay = Math.random() * 10 + 's';
-        particlesContainer.appendChild(p);
-    }
-
-    const drawer = document.getElementById('drawer'), drawerOverlay = document.getElementById('drawerOverlay');
-    const menuOpenBtn = document.getElementById('menuOpenBtn'), drawerClose = document.getElementById('drawerClose');
-    const menuMain = document.getElementById('menuMain'), tutorialSection = document.getElementById('tutorialSection'), aboutSection = document.getElementById('aboutSection'), deltaSection = document.getElementById('deltaSection');
-    
-    menuOpenBtn.addEventListener('click', () => { drawer.classList.add('open'); drawerOverlay.style.display = 'block'; });
-    drawerClose.addEventListener('click', () => { drawer.classList.remove('open'); drawerOverlay.style.display = 'none'; resetMenu(); });
-    drawerOverlay.addEventListener('click', () => { drawer.classList.remove('open'); drawerOverlay.style.display = 'none'; resetMenu(); });
-    
-    function resetMenu() { setTimeout(() => { menuMain.style.display = 'block'; tutorialSection.classList.remove('active'); aboutSection.classList.remove('active'); deltaSection.classList.remove('active'); }, 500); }
-    
-    document.getElementById('showTutorialBtn').addEventListener('click', () => { menuMain.style.display = 'none'; tutorialSection.classList.add('active'); });
-    document.getElementById('backFromTutorial').addEventListener('click', () => { tutorialSection.classList.remove('active'); menuMain.style.display = 'block'; });
-    document.getElementById('showAboutBtn').addEventListener('click', () => { menuMain.style.display = 'none'; aboutSection.classList.add('active'); });
-    document.getElementById('backFromAbout').addEventListener('click', () => { aboutSection.classList.remove('active'); menuMain.style.display = 'block'; });
-    document.getElementById('showDeltaBtn').addEventListener('click', () => { menuMain.style.display = 'none'; deltaSection.classList.add('active'); });
-    document.getElementById('backFromDelta').addEventListener('click', () => { deltaSection.classList.remove('active'); menuMain.style.display = 'block'; });
-
-    const themeToggleBtn = document.getElementById('themeToggleBtn');
-    if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); themeToggleBtn.innerText = '☀️'; }
-    themeToggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('light-mode');
-        if (document.body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); themeToggleBtn.innerText = '☀️'; }
-        else { localStorage.setItem('theme', 'dark'); themeToggleBtn.innerText = '🌙'; }
-    });
-
-    const viewToggleBtn = document.getElementById('viewToggleBtn');
-    const mainContainer = document.getElementById('mainContainer');
-    
-    viewToggleBtn.addEventListener('click', () => {
-        mainContainer.classList.toggle('compact-mode');
-        if (mainContainer.classList.contains('compact-mode')) {
-            viewToggleBtn.innerText = '☰';
-            viewToggleBtn.title = "حالت عادی";
-        } else {
-            viewToggleBtn.innerText = '⊞';
-            viewToggleBtn.title = "حالت فشرده";
+    </div>    <script>
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.width = p.style.height = Math.random() * 5 + 2 + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = Math.random() * 10 + 10 + 's';
+            p.style.animationDelay = Math.random() * 10 + 's';
+            particlesContainer.appendChild(p);
         }
-    });        const csvUrl = "https://docs.google.com/spreadsheets/d/1zQealMxZVcRvb9ZEi9OsU_ntRnsX2mMqYRO2rNuXJAY/export?format=csv";
+
+        const drawer = document.getElementById('drawer'), drawerOverlay = document.getElementById('drawerOverlay');
+        const menuOpenBtn = document.getElementById('menuOpenBtn'), drawerClose = document.getElementById('drawerClose');
+        const menuMain = document.getElementById('menuMain'), tutorialSection = document.getElementById('tutorialSection'), aboutSection = document.getElementById('aboutSection'), deltaSection = document.getElementById('deltaSection');
+        
+        menuOpenBtn.addEventListener('click', () => { drawer.classList.add('open'); drawerOverlay.style.display = 'block'; });
+        drawerClose.addEventListener('click', () => { drawer.classList.remove('open'); drawerOverlay.style.display = 'none'; resetMenu(); });
+        drawerOverlay.addEventListener('click', () => { drawer.classList.remove('open'); drawerOverlay.style.display = 'none'; resetMenu(); });
+        
+        function resetMenu() { setTimeout(() => { menuMain.style.display = 'block'; tutorialSection.classList.remove('active'); aboutSection.classList.remove('active'); deltaSection.classList.remove('active'); }, 500); }
+        
+        document.getElementById('showTutorialBtn').addEventListener('click', () => { menuMain.style.display = 'none'; tutorialSection.classList.add('active'); });
+        document.getElementById('backFromTutorial').addEventListener('click', () => { tutorialSection.classList.remove('active'); menuMain.style.display = 'block'; });
+        document.getElementById('showAboutBtn').addEventListener('click', () => { menuMain.style.display = 'none'; aboutSection.classList.add('active'); });
+        document.getElementById('backFromAbout').addEventListener('click', () => { aboutSection.classList.remove('active'); menuMain.style.display = 'block'; });
+        document.getElementById('showDeltaBtn').addEventListener('click', () => { menuMain.style.display = 'none'; deltaSection.classList.add('active'); });
+        document.getElementById('backFromDelta').addEventListener('click', () => { deltaSection.classList.remove('active'); menuMain.style.display = 'block'; });
+
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); themeToggleBtn.innerText = '☀️'; }
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); themeToggleBtn.innerText = '☀️'; }
+            else { localStorage.setItem('theme', 'dark'); themeToggleBtn.innerText = '🌙'; }
+        });
+
+        const viewToggleBtn = document.getElementById('viewToggleBtn');
+        const mainContainer = document.getElementById('mainContainer');
+        
+        viewToggleBtn.addEventListener('click', () => {
+            mainContainer.classList.toggle('compact-mode');
+            if (mainContainer.classList.contains('compact-mode')) {
+                viewToggleBtn.innerText = '☰';
+                viewToggleBtn.title = "حالت عادی";
+            } else {
+                viewToggleBtn.innerText = '⊞';
+                viewToggleBtn.title = "حالت فشرده";
+            }
+        });
+
+        const csvUrl = "https://docs.google.com/spreadsheets/d/1zQealMxZVcRvb9ZEi9OsU_ntRnsX2mMqYRO2rNuXJAY/export?format=csv";
         let allScripts = [];
 
         async function fetchScripts() {
