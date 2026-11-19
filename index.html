@@ -19,10 +19,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: var(--bg);
-            /* زوم عکس کم شد و کامل دیده میشه */
             background-image: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.85)), url('IMG_20261119_150146_656.jpg'); 
-            background-size: 100% 100%; 
-            background-position: center;
+            background-size: cover; /* این خط عکس رو کشیده نمی‌کنه */
+            background-position: center top; /* شخصیت زرد میاد بالا */
             background-attachment: fixed;
             background-repeat: no-repeat;
             color: var(--text); font-family: 'Vazirmatn', sans-serif;
@@ -42,7 +41,6 @@
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.02);
             transition: all 0.3s; position: relative; overflow: hidden;
-            /* نور چرخان (::before) حذف شد */
         }
         .header h1 {
             font-size: 26px; font-weight: 900; z-index: 1; position: relative;
@@ -108,13 +106,7 @@
         .compact-mode .card.open .copy-btn { display: block; width: calc(100% - 40px); margin: 0 20px 20px 20px; }
 
         .footer { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; font-size: 13px; color: var(--dim); background: var(--panel); backdrop-filter: blur(20px); border-top: 1px solid var(--border); z-index: 100; }
-        
-        /* دکمه فوتر کوچیک و یک خطی شد */
-        .footer .btn { 
-            background: var(--accent); color: var(--btn-text); padding: 10px 15px; 
-            text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 13px; 
-            white-space: nowrap; transition: all 0.3s; 
-        }
+        .footer .btn { background: var(--accent); color: var(--btn-text); padding: 10px 15px; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 13px; white-space: nowrap; transition: all 0.3s; }
         .footer .btn:hover { transform: translateY(-3px) scale(1.05); }
         
         .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 998; display: none; backdrop-filter: blur(8px); }
@@ -205,9 +197,9 @@
     <div class="toast" id="toast">✅ کد با موفقیت کپی شد!</div>
 
     <div class="footer">
-        <span>Timsar ScriptShare | V4.0 QUANTUM</span>
+        <span>Timsar ScriptShare | V4.0</span>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
-    </div>    <script>
+                </div>    <script>
         const particlesContainer = document.getElementById('particles');
         for (let i = 0; i < 20; i++) {
             const p = document.createElement('div');
