@@ -10,72 +10,91 @@
         :root {
             --bg-gradient: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2a2a00 100%);
             --text-color: #fff; --text-dim: #ddd;
-            --header-bg: rgba(26, 26, 26, 0.85); --border-color: #333;
-            --card-bg: rgba(26, 26, 26, 0.85); --input-bg: rgba(26, 26, 26, 0.85);
-            --footer-bg: rgba(15, 15, 15, 0.95); --code-bg: rgba(0, 0, 0, 0.7);
+            --header-bg: rgba(26, 26, 26, 0.75); --border-color: #333;
+            --card-bg: rgba(26, 26, 26, 0.75); --input-bg: rgba(26, 26, 26, 0.75);
+            --footer-bg: rgba(15, 15, 15, 0.9); --code-bg: rgba(0, 0, 0, 0.6);
             --btn-bg: #FFCC00; --btn-text: #000; --accent: #FFCC00;
-            --tag-bg: rgba(255, 204, 0, 0.15);
+            --tag-bg: rgba(255, 204, 0, 0.15); --glow: rgba(255, 204, 0, 0.3);
         }
         .light-mode {
             --bg-gradient: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 50%, #fff9c4 100%);
             --text-color: #222; --text-dim: #555;
-            --header-bg: rgba(255, 255, 255, 0.9); --border-color: #ccc;
-            --card-bg: rgba(255, 255, 255, 0.9); --input-bg: rgba(255, 255, 255, 0.9);
-            --footer-bg: rgba(255, 255, 255, 0.95); --code-bg: rgba(0, 0, 0, 0.05);
+            --header-bg: rgba(255, 255, 255, 0.85); --border-color: #ccc;
+            --card-bg: rgba(255, 255, 255, 0.85); --input-bg: rgba(255, 255, 255, 0.85);
+            --footer-bg: rgba(255, 255, 255, 0.9); --code-bg: rgba(0, 0, 0, 0.05);
             --btn-bg: #ffb300; --btn-text: #000; --accent: #ff8f00;
-            --tag-bg: rgba(255, 143, 0, 0.15);
+            --tag-bg: rgba(255, 143, 0, 0.15); --glow: rgba(255, 143, 0, 0.4);
         }
 
-        body { background: var(--bg-gradient); color: var(--text-color); font-family: 'Vazirmatn', sans-serif; padding: 20px; padding-bottom: 80px; margin: 0; min-height: 100vh; transition: 0.3s; }
+        * { box-sizing: border-box; }
+        body { background: var(--bg-gradient); color: var(--text-color); font-family: 'Vazirmatn', sans-serif; padding: 20px; padding-bottom: 80px; margin: 0; min-height: 100vh; transition: background 0.5s, color 0.3s; overflow-x: hidden; }
         .container { max-width: 600px; margin: auto; }
         
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 12px 15px; background-color: var(--header-bg); border-radius: 12px; border: 1px solid var(--accent); backdrop-filter: blur(5px); box-shadow: 0 0 15px rgba(255, 204, 0, 0.2); }
-        .header h1 { margin: 0; color: var(--accent); font-size: 22px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 12px 15px; background-color: var(--header-bg); border-radius: 16px; border: 1px solid var(--border-color); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transition: all 0.3s; }
+        .header:hover { box-shadow: 0 8px 32px var(--glow); border-color: var(--accent); }
+        .header h1 { margin: 0; color: var(--accent); font-size: 22px; text-shadow: 0 0 10px var(--glow); }
         .header-btns { display: flex; gap: 8px; align-items: center; }
-        .icon-btn { background: none; border: 1px solid var(--accent); color: var(--accent); font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: 0.2s; }
-        .icon-btn:hover { background: rgba(255, 204, 0, 0.1); }
+        .icon-btn { background: none; border: 1px solid var(--border-color); color: var(--text-color); font-size: 18px; cursor: pointer; padding: 6px 10px; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center; }
+        .icon-btn:hover { background: var(--accent); color: var(--btn-text); border-color: var(--accent); transform: rotate(15deg) scale(1.1); box-shadow: 0 0 15px var(--glow); }
 
-        .search-bar { width: 100%; padding: 12px; margin-bottom: 25px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-color); box-sizing: border-box; font-family: inherit; outline: none; transition: 0.3s; }
-        .search-bar:focus { border-color: var(--accent); }
+        .search-bar { width: 100%; padding: 14px 16px; margin-bottom: 20px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-color); font-family: inherit; font-size: 14px; outline: none; transition: all 0.3s; backdrop-filter: blur(10px); }
+        .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--glow); transform: translateY(-2px); }
 
-        .card { background-color: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.1); backdrop-filter: blur(5px); transition: 0.3s; }
+        .card { background-color: var(--card-bg); padding: 20px; border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; transform: translateY(20px); animation: slideUp 0.5s forwards; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px var(--glow); border-color: var(--accent); }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+        
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
         .card h3 { margin: 0; color: var(--accent); font-size: 18px; }
         
         .meta-info { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; margin-bottom: 10px; }
-        .meta-item { font-size: 11px; color: var(--text-dim); background: var(--tag-bg); padding: 3px 8px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; }
+        .meta-item { font-size: 11px; color: var(--text-dim); background: var(--tag-bg); padding: 4px 10px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px; transition: all 0.3s; }
+        .meta-item:hover { background: var(--accent); color: var(--btn-text); transform: scale(1.05); }
         
         .card p { font-size: 13px; color: var(--text-dim); line-height: 1.6; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; word-break: break-word; }
-        .code-container { background: var(--code-bg); border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 15px; overflow: hidden; }
-        .card pre { margin: 0; padding: 15px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; word-wrap: break-word; max-height: 150px; color: var(--text-color); }
+        .code-container { background: var(--code-bg); border-radius: 10px; border: 1px solid var(--border-color); margin-bottom: 15px; overflow: hidden; position: relative; }
+        .card pre { margin: 0; padding: 15px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; word-wrap: break-word; max-height: 150px; color: var(--text-color); font-family: monospace; }
         .card pre::-webkit-scrollbar { height: 6px; width: 6px; }
-        .card pre::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
+        .card pre::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
-        .copy-btn { background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-family: inherit; width: 100%; }
-        .copy-btn:hover { background: #45a049; }
+        .copy-btn { background: var(--btn-bg); color: var(--btn-text); border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; font-family: inherit; width: 100%; font-size: 14px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .copy-btn:hover { background: var(--accent); transform: scale(1.02); box-shadow: 0 5px 15px var(--glow); }
+        .copy-btn:active { transform: scale(0.98); }
 
-        .footer { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; font-size: 12px; color: var(--text-dim); background: var(--footer-bg); border-top: 1px solid var(--accent); box-sizing: border-box; backdrop-filter: blur(10px); }
-        .footer .btn { background-color: var(--btn-bg); color: var(--btn-text); padding: 10px 15px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 13px; white-space: nowrap; }
+        .footer { position: fixed; bottom: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; font-size: 12px; color: var(--text-dim); background: var(--footer-bg); border-top: 1px solid var(--border-color); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 100; transition: all 0.3s; }
+        .footer .btn { background-color: var(--btn-bg); color: var(--btn-text); padding: 10px 18px; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 13px; white-space: nowrap; transition: all 0.3s; }
+        .footer .btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 5px 15px var(--glow); }
 
-        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 998; display: none; backdrop-filter: blur(3px); }
-        .drawer { position: fixed; top: 0; right: -300px; width: 260px; height: 100%; background: var(--header-bg); z-index: 999; transition: 0.3s; border-left: 1px solid var(--accent); padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; }
+        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 998; display: none; backdrop-filter: blur(4px); transition: opacity 0.3s; }
+        .drawer { position: fixed; top: 0; right: -320px; width: 280px; height: 100%; background: var(--header-bg); z-index: 999; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); border-left: 1px solid var(--border-color); padding: 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
         .drawer.open { right: 0; }
-        .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-        .drawer-close { background: none; border: none; color: var(--accent); font-size: 20px; cursor: pointer; }
-        .drawer-item { color: var(--text-color); font-size: 15px; padding: 12px; border-radius: 8px; background: rgba(255, 204, 0, 0.1); cursor: pointer; border: 1px solid transparent; }
-        .drawer-item:hover { border-color: var(--accent); }
-        .drawer-section { display: none; flex-direction: column; gap: 10px; }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+        .drawer-close { background: none; border: none; color: var(--accent); font-size: 24px; cursor: pointer; transition: transform 0.3s; }
+        .drawer-close:hover { transform: rotate(90deg); }
+        .drawer-item { color: var(--text-color); font-size: 15px; padding: 14px; border-radius: 12px; background: var(--tag-bg); cursor: pointer; border: 1px solid transparent; transition: all 0.3s; }
+        .drawer-item:hover { border-color: var(--accent); transform: translateX(-5px); background: rgba(255, 204, 0, 0.2); }
+        .drawer-section { display: none; flex-direction: column; gap: 10px; animation: fadeIn 0.3s; }
         .drawer-section.active { display: flex; }
-        .back-btn { background: none; border: none; color: var(--accent); font-size: 14px; cursor: pointer; text-align: right; padding: 0; }
-        .text-content { font-size: 12px; line-height: 1.8; color: var(--text-dim); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .back-btn { background: none; border: none; color: var(--accent); font-size: 14px; cursor: pointer; text-align: right; padding: 0; font-weight: bold; }
+        .text-content { font-size: 13px; line-height: 1.8; color: var(--text-dim); }
         .text-content strong { color: var(--accent); }
-        .text-content a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); display: block; margin-bottom: 8px; }
+        .text-content a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); transition: 0.2s; }
+        .text-content a:hover { color: #fff; border-bottom: 1px solid #fff; }
+
+        /* Toast Notification */
+        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(100px); background: #4caf50; color: white; padding: 12px 24px; border-radius: 10px; font-weight: bold; box-shadow: 0 5px 15px rgba(0,0,0,0.3); opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 1000; pointer-events: none; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* Skeleton Loading */
+        .skeleton { background: linear-gradient(90deg, var(--card-bg) 25%, var(--border-color) 50%, var(--card-bg) 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 8px; margin-bottom: 15px; height: 150px; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body>
     <div class="drawer-overlay" id="drawerOverlay"></div>
     <div class="drawer" id="drawer">
-        <div class="drawer-header"><span style="color:var(--accent); font-weight:bold;">منو</span><button class="drawer-close" id="drawerClose">&times;</button></div>
+        <div class="drawer-header"><span style="color:var(--accent); font-weight:bold; font-size:18px;">منو</span><button class="drawer-close" id="drawerClose">&times;</button></div>
         <div id="menuMain">
             <div class="drawer-item" id="showTutorialBtn">📚 آموزش آپلود</div>
             <div class="drawer-item" id="showAboutBtn">ℹ️ درباره سازنده</div>
@@ -106,7 +125,6 @@
             </div>
         </div>
 
-        <!-- بخش جدید: آپدیت های دلتا -->
         <div class="drawer-section" id="deltaSection">
             <button class="back-btn" id="backFromDelta">➡️ بازگشت</button>
             <div class="text-content">
@@ -131,25 +149,19 @@
         
         <input type="text" id="searchInput" class="search-bar" placeholder="جستجوی اسکریپت یا بازی...">
         
-        <div id="scripts-list"><p style="text-align:center; color:var(--text-dim);">در حال بارگذاری...</p></div>
+        <div id="scripts-list">
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+        </div>
     </div>
+
+    <div class="toast" id="toast">کد کپی شد! ✅</div>
 
     <div class="footer">
-        <span>Timsar ScriptShare | V4.0</span>
+        <span>Timsar ScriptShare | V3.0</span>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
-    </div>
-
-    <script>
-        // ═══ تم ═══
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); themeToggleBtn.innerText = '☀️'; }
-        themeToggleBtn.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            if (document.body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); themeToggleBtn.innerText = '☀️'; }
-            else { localStorage.setItem('theme', 'dark'); themeToggleBtn.innerText = '🌙'; }
-        });
-
-        // ═══ منو ═══
+    </div>    <script>
         const drawer = document.getElementById('drawer'), drawerOverlay = document.getElementById('drawerOverlay');
         const menuOpenBtn = document.getElementById('menuOpenBtn'), drawerClose = document.getElementById('drawerClose');
         const menuMain = document.getElementById('menuMain'), tutorialSection = document.getElementById('tutorialSection'), aboutSection = document.getElementById('aboutSection'), deltaSection = document.getElementById('deltaSection');
@@ -164,12 +176,17 @@
         document.getElementById('backFromTutorial').addEventListener('click', () => { tutorialSection.classList.remove('active'); menuMain.style.display = 'block'; });
         document.getElementById('showAboutBtn').addEventListener('click', () => { menuMain.style.display = 'none'; aboutSection.classList.add('active'); });
         document.getElementById('backFromAbout').addEventListener('click', () => { aboutSection.classList.remove('active'); menuMain.style.display = 'block'; });
-        
-        // بخش دلتا
         document.getElementById('showDeltaBtn').addEventListener('click', () => { menuMain.style.display = 'none'; deltaSection.classList.add('active'); });
         document.getElementById('backFromDelta').addEventListener('click', () => { deltaSection.classList.remove('active'); menuMain.style.display = 'block'; });
 
-        // ═══ اطلاعات ═══
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); themeToggleBtn.innerText = '☀️'; }
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); themeToggleBtn.innerText = '☀️'; }
+            else { localStorage.setItem('theme', 'dark'); themeToggleBtn.innerText = '🌙'; }
+        });
+
         const csvUrl = "https://docs.google.com/spreadsheets/d/1zQealMxZVcRvb9ZEi9OsU_ntRnsX2mMqYRO2rNuXJAY/export?format=csv";
         let allScripts = [];
 
@@ -226,11 +243,12 @@
         function renderScripts(scripts) {
             const container = document.getElementById('scripts-list');
             container.innerHTML = '';
-            if (scripts.length === 0) { container.innerHTML = '<p style="text-align:center; color:var(--text-dim);">اسکریپتی یافت نشد.</p>'; return; }
+            if (scripts.length === 0) { container.innerHTML = '<p style="text-align:center; color:var(--text-dim); padding: 20px;">اسکریپتی یافت نشد.</p>'; return; }
 
-            scripts.forEach(s => {
+            scripts.forEach((s, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                card.style.animationDelay = (index * 0.05) + 's';
                 
                 card.innerHTML = `
                     <div class="card-header"><h3>${s.name}</h3></div>
@@ -240,13 +258,27 @@
                     </div>
                     <p>${s.desc}</p>
                     <div class="code-container"><pre><code>${s.code}</code></pre></div>
-                    <button class="copy-btn" onclick="copyText(\`${s.code.replace(/`/g, '\\`')}\`)">کپی کد</button>
+                    <button class="copy-btn" onclick="copyText(this, \`${s.code.replace(/`/g, '\\`')}\`)">📋 کپی کد</button>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function copyText(text) { navigator.clipboard.writeText(text).then(() => alert('کد کپی شد!')); }
+        function copyText(btn, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                btn.innerText = '✅ کپی شد!';
+                btn.style.background = '#4caf50';
+                btn.style.color = 'white';
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    btn.innerText = '📋 کپی کد';
+                    btn.style.background = 'var(--btn-bg)';
+                    btn.style.color = 'var(--btn-text)';
+                }, 2000);
+            });
+        }
         
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const q = e.target.value.toLowerCase();
