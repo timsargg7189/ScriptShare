@@ -3,295 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ScriptShare</title>
+    <title>ScriptShare | Quantum</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;900&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap');
         :root {
-            --bg-1: #0a0a0a;
-            --bg-2: #141400;
-            --bg-3: #2a2a00;
-            --text-main: #ffffff;
-            --text-dim: #b0b0b0;
-            --glass-bg: rgba(20, 20, 20, 0.65);
-            --glass-border: rgba(255, 204, 0, 0.15);
-            --accent: #FFCC00;
-            --accent-glow: rgba(255, 204, 0, 0.4);
-            --btn-text: #000;
-            --code-bg: rgba(0, 0, 0, 0.5);
-            --tag-bg: rgba(255, 204, 0, 0.1);
+            --bg: #050505; --panel: rgba(15, 15, 18, 0.6); --border: rgba(255, 204, 0, 0.15);
+            --accent: #FFCC00; --accent-glow: rgba(255, 204, 0, 0.4); --text: #fff; --dim: #888;
+            --code-bg: #000; --tag-bg: rgba(255, 204, 0, 0.1); --btn-text: #000;
         }
         .light-mode {
-            --bg-1: #f5f5f5;
-            --bg-2: #e8e8e8;
-            --bg-3: #fff9c4;
-            --text-main: #111;
-            --text-dim: #555;
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(0, 0, 0, 0.1);
-            --accent: #ff8f00;
-            --accent-glow: rgba(255, 143, 0, 0.3);
-            --btn-text: #fff;
-            --code-bg: rgba(0, 0, 0, 0.06);
-            --tag-bg: rgba(255, 143, 0, 0.1);
+            --bg: #f4f4f4; --panel: rgba(255, 255, 255, 0.7); --border: rgba(0, 0, 0, 0.1);
+            --accent: #ff8f00; --accent-glow: rgba(255, 143, 0, 0.3); --text: #111; --dim: #555;
+            --code-bg: rgba(0,0,0,0.05); --tag-bg: rgba(255, 143, 0, 0.1); --btn-text: #fff;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            background: linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: var(--text-main); 
-            font-family: 'Vazirmatn', sans-serif; 
-            padding: 20px; 
-            padding-bottom: 90px; 
-            min-height: 100vh;
-            transition: color 0.3s;
-            overflow-x: hidden;
+        body {
+            background-color: var(--bg);
+            color: var(--text); font-family: 'Vazirmatn', sans-serif;
+            padding: 20px; padding-bottom: 90px; min-height: 100vh;
+            transition: background 0.5s, color 0.3s; overflow-x: hidden;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        .bg-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
+        .particle { position: absolute; background: var(--accent); border-radius: 50%; opacity: 0.3; animation: float linear infinite; box-shadow: 0 0 10px var(--accent-glow); }
+        @keyframes float { from { transform: translateY(100vh) scale(0); } to { transform: translateY(-10vh) scale(1.5); } }
 
-        .container { max-width: 600px; margin: auto; position: relative; z-index: 1; }
-
-        /* هدر */
-        .header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            margin-bottom: 25px; padding: 14px 18px; 
-            background: var(--glass-bg); 
+        .container { max-width: 650px; margin: auto; position: relative; z-index: 2; }
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 25px; padding: 15px 20px; background: var(--panel);
+            border-radius: 20px; border: 1px solid var(--border);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-radius: 20px; 
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.02);
+            transition: all 0.3s; position: relative; overflow: hidden;
         }
-        .header:hover {
-            border-color: var(--accent);
-            box-shadow: 0 8px 32px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        .header::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--accent), transparent 30%);
+            animation: rotate 4s linear infinite; opacity: 0; transition: opacity 0.3s;
         }
-        .header h1 { 
-            font-size: 24px; font-weight: 900; 
-            background: linear-gradient(to left, var(--accent), #fff, var(--accent));
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
+        .header:hover::before { opacity: 0.2; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .header h1 {
+            font-size: 26px; font-weight: 900; z-index: 1; position: relative;
+            background: linear-gradient(90deg, var(--accent), #fff, var(--accent));
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite; text-shadow: 0 0 20px var(--accent-glow);
         }
         @keyframes shine { to { background-position: 200% center; } }
+        .header-btns { display: flex; gap: 10px; z-index: 1; position: relative; }
+        .icon-btn {
+            background: var(--tag-bg); border: 1px solid var(--border);
+            color: var(--accent); font-size: 20px; cursor: pointer;
+            width: 45px; height: 45px; border-radius: 12px; display: flex;
+            align-items: center; justify-content: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .icon-btn:hover { background: var(--accent); color: var(--btn-text); transform: rotate(90deg) scale(1.1); box-shadow: 0 0 20px var(--accent-glow); }
 
-        .header-btns { display: flex; gap: 10px; }
-        .icon-btn { 
-            background: var(--tag-bg); border: 1px solid var(--glass-border); 
-            color: var(--accent); font-size: 18px; cursor: pointer; 
-            padding: 8px 12px; border-radius: 12px; 
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            display: flex; align-items: center; justify-content: center; 
+        .search-bar {
+            width: 100%; padding: 16px 20px; margin-bottom: 25px; border-radius: 16px;
+            border: 1px solid var(--border); background: var(--panel); backdrop-filter: blur(15px);
+            color: var(--text); font-family: inherit; font-size: 15px; outline: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
-        .icon-btn:hover { 
-            background: var(--accent); color: var(--btn-text); 
-            transform: translateY(-3px) scale(1.1); 
-            box-shadow: 0 5px 15px var(--accent-glow); 
-        }
+        .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 25px var(--accent-glow); transform: scale(1.02); }
 
-        /* نوار جستجو */
-        .search-bar { 
-            width: 100%; padding: 16px 20px; margin-bottom: 25px; 
-            border-radius: 16px; border: 1px solid var(--glass-border); 
-            background: var(--glass-bg); backdrop-filter: blur(15px);
-            color: var(--text-main); font-family: inherit; font-size: 15px; 
-            outline: none; transition: all 0.4s ease; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        .card {
+            background: var(--panel); padding: 25px; border-radius: 20px; margin-bottom: 25px;
+            border: 1px solid var(--border); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.4s ease-out;
+            opacity: 0; transform: translateY(40px) scale(0.9); animation: cardEnter 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            position: relative; transform-style: preserve-3d; perspective: 1000px;
         }
-        .search-bar:focus { 
-            border-color: var(--accent); 
-            box-shadow: 0 0 20px var(--accent-glow); 
-            transform: scale(1.02); 
-            background: rgba(20, 20, 20, 0.85);
+        .card::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 20px; pointer-events: none;
+            box-shadow: inset 0 0 20px rgba(255, 204, 0, 0.05); opacity: 0; transition: opacity 0.3s;
         }
-        .light-mode .search-bar:focus { background: rgba(255, 255, 255, 0.95); }
-
-        /* کارت‌ها */
-        .card { 
-            background: var(--glass-bg); 
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 22px; border-radius: 20px; margin-bottom: 22px; 
-            border: 1px solid var(--glass-border); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            opacity: 0; transform: translateY(30px) scale(0.95); 
-            animation: cardEnter 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            position: relative; overflow: hidden;
-        }
-        .card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .card:hover { 
-            transform: translateY(-8px) scale(1.01); 
-            box-shadow: 0 20px 40px var(--accent-glow); 
-            border-color: var(--accent);
-        }
-        .card:hover::before { opacity: 1; }
+        .card:hover::after { opacity: 1; }
+        .card:hover { border-color: var(--accent); box-shadow: 0 20px 50px var(--accent-glow); }
         @keyframes cardEnter { to { opacity: 1; transform: translateY(0) scale(1); } }
 
-        .card h3 { 
-            font-size: 19px; font-weight: 700; color: var(--accent); 
-            margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+        .card h3 {
+            font-size: 20px; font-weight: 700; color: var(--accent); margin-bottom: 10px;
+            display: flex; align-items: center; gap: 10px; position: relative;
         }
+        .card h3::before { content: '>'; color: var(--accent); opacity: 0.5; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
         
-        .meta-info { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-        .meta-item { 
-            font-size: 11px; color: var(--text-dim); 
-            background: var(--tag-bg); padding: 5px 10px; border-radius: 8px; 
-            display: inline-flex; align-items: center; gap: 4px; 
-            transition: all 0.3s; border: 1px solid transparent;
+        .meta-info { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+        .meta-item {
+            font-size: 12px; color: var(--dim); background: var(--tag-bg); padding: 6px 12px;
+            border-radius: 8px; display: inline-flex; align-items: center; gap: 6px;
+            border: 1px solid transparent; transition: all 0.3s;
         }
-        .meta-item:hover { 
-            background: var(--accent); color: var(--btn-text); 
-            transform: scale(1.05); border-color: var(--accent);
+        .meta-item:hover { background: var(--accent); color: var(--btn-text); transform: translateY(-2px); border-color: var(--accent); }
+
+        .card p { font-size: 14px; color: var(--dim); line-height: 1.8; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .code-container {
+            background: var(--code-bg); border-radius: 12px; border: 1px solid var(--border);
+            margin-bottom: 20px; overflow: hidden; position: relative; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
-        
-        .card p { 
-            font-size: 13px; color: var(--text-dim); line-height: 1.7; 
-            margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical; overflow: hidden; 
-        }
-        
-        .code-container { 
-            background: var(--code-bg); border-radius: 12px; 
-            border: 1px solid var(--glass-border); margin-bottom: 15px; 
-            overflow: hidden; position: relative; 
-        }
-        .card pre { 
-            margin: 0; padding: 15px; overflow-x: auto; font-size: 12px; 
-            white-space: pre-wrap; word-wrap: break-word; max-height: 150px; 
-            color: #a6e3a1; font-family: monospace; 
-            direction: ltr; text-align: left;
-        }
+        .card pre { margin: 0; padding: 15px; overflow-x: auto; font-size: 12px; white-space: pre-wrap; word-wrap: break-word; max-height: 160px; color: #00ff41; font-family: monospace; direction: ltr; text-align: left; }
         .card pre::-webkit-scrollbar { height: 6px; width: 6px; }
         .card pre::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
-        .copy-btn { 
-            background: var(--accent); color: var(--btn-text); 
-            border: none; padding: 14px 20px; border-radius: 12px; 
-            cursor: pointer; font-weight: 700; font-family: inherit; 
-            width: 100%; font-size: 14px; 
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            position: relative; overflow: hidden;
-            box-shadow: 0 4px 15px var(--accent-glow);
+        .copy-btn {
+            background: var(--accent); color: var(--btn-text); border: none; padding: 15px 20px;
+            border-radius: 12px; cursor: pointer; font-weight: 700; font-family: inherit; width: 100%;
+            font-size: 15px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden; box-shadow: 0 5px 20px var(--accent-glow);
         }
-        .copy-btn:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 8px 25px var(--accent-glow); 
-        }
+        .copy-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px var(--accent-glow); }
         .copy-btn:active { transform: translateY(0) scale(0.98); }
 
-        /* فوتر */
-        .footer { 
-            position: fixed; bottom: 0; left: 0; width: 100%; 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 25px; font-size: 12px; color: var(--text-dim); 
-            background: var(--glass-bg); backdrop-filter: blur(20px); 
-            border-top: 1px solid var(--glass-border); 
-            z-index: 100; box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+        .footer {
+            position: fixed; bottom: 0; left: 0; width: 100%; display: flex;
+            justify-content: space-between; align-items: center; padding: 15px 25px;
+            font-size: 13px; color: var(--dim); background: var(--panel);
+            backdrop-filter: blur(20px); border-top: 1px solid var(--border); z-index: 100;
         }
-        .footer .btn { 
-            background: var(--accent); color: var(--btn-text); 
-            padding: 12px 20px; text-decoration: none; border-radius: 12px; 
-            font-weight: 700; font-size: 13px; white-space: nowrap; 
-            transition: all 0.3s; box-shadow: 0 4px 15px var(--accent-glow);
+        .footer .btn {
+            background: var(--accent); color: var(--btn-text); padding: 12px 25px; text-decoration: none;
+            border-radius: 12px; font-weight: 700; font-size: 14px; transition: all 0.3s;
+            box-shadow: 0 5px 20px var(--accent-glow);
         }
-        .footer .btn:hover { 
-            transform: translateY(-3px) scale(1.05); 
-            box-shadow: 0 8px 25px var(--accent-glow); 
-        }
+        .footer .btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 30px var(--accent-glow); }
 
-        /* منو و کشو */
-        .drawer-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.6); z-index: 998; display: none; 
-            backdrop-filter: blur(5px); transition: opacity 0.4s; 
-        }
-        .drawer { 
-            position: fixed; top: 0; right: -320px; width: 280px; height: 100%; 
-            background: var(--glass-bg); backdrop-filter: blur(25px); 
-            z-index: 999; transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border-left: 1px solid var(--glass-border); padding: 25px 20px; 
-            display: flex; flex-direction: column; gap: 15px; overflow-y: auto; 
-            box-shadow: -10px 0 30px rgba(0,0,0,0.3);
-        }
+        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 998; display: none; backdrop-filter: blur(8px); transition: opacity 0.4s; }
+        .drawer { position: fixed; top: 0; right: -350px; width: 300px; height: 100%; background: var(--panel); backdrop-filter: blur(25px); z-index: 999; transition: right 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border-left: 1px solid var(--border); padding: 25px 20px; display: flex; flex-direction: column; gap: 15px; overflow-y: auto; box-shadow: -10px 0 40px rgba(0,0,0,0.5); }
         .drawer.open { right: 0; }
-        .drawer-header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; 
-            margin-bottom: 10px;
-        }
-        .drawer-close { 
-            background: none; border: none; color: var(--accent); 
-            font-size: 26px; cursor: pointer; transition: transform 0.3s; 
-        }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 10px; }
+        .drawer-close { background: none; border: none; color: var(--accent); font-size: 28px; cursor: pointer; transition: transform 0.3s; }
         .drawer-close:hover { transform: rotate(90deg); }
-        .drawer-item { 
-            color: var(--text-main); font-size: 15px; padding: 16px; 
-            border-radius: 14px; background: var(--tag-bg); cursor: pointer; 
-            border: 1px solid transparent; transition: all 0.3s; 
-            display: flex; align-items: center; gap: 10px;
-        }
-        .drawer-item:hover { 
-            border-color: var(--accent); transform: translateX(-5px); 
-            background: rgba(255, 204, 0, 0.2); box-shadow: 0 4px 15px var(--accent-glow);
-        }
+        .drawer-item { color: var(--text); font-size: 16px; padding: 16px; border-radius: 14px; background: var(--tag-bg); cursor: pointer; border: 1px solid transparent; transition: all 0.3s; display: flex; align-items: center; gap: 10px; }
+        .drawer-item:hover { border-color: var(--accent); transform: translateX(-5px); background: rgba(255, 204, 0, 0.15); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .drawer-section { display: none; flex-direction: column; gap: 12px; animation: fadeIn 0.4s; }
         .drawer-section.active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .back-btn { 
-            background: none; border: none; color: var(--accent); font-size: 14px; 
-            cursor: pointer; text-align: right; padding: 0; font-weight: 700; 
-            display: flex; align-items: center; gap: 5px; transition: 0.3s;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .back-btn { background: none; border: none; color: var(--accent); font-size: 14px; cursor: pointer; text-align: right; padding: 0; font-weight: 700; display: flex; align-items: center; gap: 5px; transition: 0.3s; }
         .back-btn:hover { transform: translateX(5px); }
-        .text-content { font-size: 13px; line-height: 1.9; color: var(--text-dim); }
+        .text-content { font-size: 14px; line-height: 2; color: var(--dim); }
         .text-content strong { color: var(--accent); }
-        .text-content a { 
-            color: var(--accent); text-decoration: none; 
-            border-bottom: 1px dashed var(--accent); transition: 0.2s; 
-        }
+        .text-content a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed var(--accent); transition: 0.2s; }
         .text-content a:hover { border-bottom: 1px solid var(--accent); }
 
-        /* Toast Notification */
-        .toast { 
-            position: fixed; bottom: 90px; left: 50%; 
-            transform: translateX(-50%) translateY(100px) scale(0.8); 
-            background: #4caf50; color: white; padding: 14px 28px; 
-            border-radius: 14px; font-weight: 700; 
-            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.4); 
-            opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            z-index: 1000; pointer-events: none; display: flex; align-items: center; gap: 8px;
-        }
+        .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(100px) scale(0.8); background: #4caf50; color: white; padding: 15px 30px; border-radius: 14px; font-weight: 700; box-shadow: 0 10px 30px rgba(76, 175, 80, 0.5); opacity: 0; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1000; pointer-events: none; display: flex; align-items: center; gap: 8px; }
         .toast.show { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
 
-        /* Skeleton */
-        .skeleton { 
-            background: linear-gradient(90deg, var(--glass-bg) 25%, var(--glass-border) 50%, var(--glass-bg) 75%); 
-            background-size: 200% 100%; animation: loading 1.5s infinite; 
-            border-radius: 20px; margin-bottom: 20px; height: 180px; 
-            border: 1px solid var(--glass-border);
-        }
+        .skeleton { background: linear-gradient(90deg, var(--panel) 25%, var(--border) 50%, var(--panel) 75%); background-size: 200% 100%; animation: loading 1.5s infinite; border-radius: 20px; margin-bottom: 25px; height: 200px; border: 1px solid var(--border); }
         @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body>
+    <div class="bg-particles" id="particles"></div>
     <div class="drawer-overlay" id="drawerOverlay"></div>
     <div class="drawer" id="drawer">
-        <div class="drawer-header">
-            <span style="color:var(--accent); font-weight:900; font-size:20px;">منو</span>
-            <button class="drawer-close" id="drawerClose">&times;</button>
-        </div>
+        <div class="drawer-header"><span style="color:var(--accent); font-weight:900; font-size:20px;">منو</span><button class="drawer-close" id="drawerClose">&times;</button></div>
         <div id="menuMain">
             <div class="drawer-item" id="showTutorialBtn">📚 آموزش آپلود</div>
             <div class="drawer-item" id="showAboutBtn">ℹ️ درباره سازنده</div>
@@ -331,6 +199,7 @@
             </div>
         </div>
     </div>
+
     <div class="container">
         <div class="header">
             <h1>ScriptShare</h1>
@@ -346,11 +215,24 @@
             <div class="skeleton"></div>
         </div>
     </div>
+
     <div class="toast" id="toast">✅ کد با موفقیت کپی شد!</div>
+
     <div class="footer">
-        <span>Timsar ScriptShare | V3.0</span>
+        <span>Timsar ScriptShare | V4.0 QUANTUM</span>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScGiLGZfESfoYGQpDkUGOl02up2wG0BqwMy1ElWV84KAo0rkA/viewform" target="_blank" class="btn">+ افزودن اسکریپت</a>
     </div>    <script>
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.width = p.style.height = Math.random() * 5 + 2 + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = Math.random() * 10 + 10 + 's';
+            p.style.animationDelay = Math.random() * 10 + 's';
+            particlesContainer.appendChild(p);
+        }
+
         const drawer = document.getElementById('drawer'), drawerOverlay = document.getElementById('drawerOverlay');
         const menuOpenBtn = document.getElementById('menuOpenBtn'), drawerClose = document.getElementById('drawerClose');
         const menuMain = document.getElementById('menuMain'), tutorialSection = document.getElementById('tutorialSection'), aboutSection = document.getElementById('aboutSection'), deltaSection = document.getElementById('deltaSection');
@@ -359,7 +241,7 @@
         drawerClose.addEventListener('click', () => { drawer.classList.remove('open'); drawerOverlay.style.display = 'none'; resetMenu(); });
         drawerOverlay.addEventListener('click', () => { drawer.classList.remove('open'); drawerOverlay.style.display = 'none'; resetMenu(); });
         
-        function resetMenu() { setTimeout(() => { menuMain.style.display = 'block'; tutorialSection.classList.remove('active'); aboutSection.classList.remove('active'); deltaSection.classList.remove('active'); }, 400); }
+        function resetMenu() { setTimeout(() => { menuMain.style.display = 'block'; tutorialSection.classList.remove('active'); aboutSection.classList.remove('active'); deltaSection.classList.remove('active'); }, 500); }
         
         document.getElementById('showTutorialBtn').addEventListener('click', () => { menuMain.style.display = 'none'; tutorialSection.classList.add('active'); });
         document.getElementById('backFromTutorial').addEventListener('click', () => { tutorialSection.classList.remove('active'); menuMain.style.display = 'block'; });
@@ -376,6 +258,22 @@
             else { localStorage.setItem('theme', 'dark'); themeToggleBtn.innerText = '🌙'; }
         });
 
+        function applyTilt(card) {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        }
+
         const csvUrl = "https://docs.google.com/spreadsheets/d/1zQealMxZVcRvb9ZEi9OsU_ntRnsX2mMqYRO2rNuXJAY/export?format=csv";
         let allScripts = [];
 
@@ -384,34 +282,15 @@
                 const res = await fetch(csvUrl);
                 const data = await res.text();
                 const rows = data.split('\n');
-                
                 const headers = rows[0].split(',').map(h => h.toLowerCase().trim());
-                const findIndex = (names) => {
-                    for (let i = 0; i < headers.length; i++) {
-                        for (let name of names) { if (headers[i].includes(name)) return i; }
-                    }
-                    return -1;
-                };
-
-                const nameIdx = findIndex(['name']);
-                const codeIdx = findIndex(['code']);
-                const descIdx = findIndex(['description', 'desc']);
-                const gameIdx = findIndex(['game name', 'game']);
-                const creatorIdx = findIndex(['creator name', 'creator']);
-
+                const findIndex = (names) => { for (let i = 0; i < headers.length; i++) { for (let name of names) { if (headers[i].includes(name)) return i; } } return -1; };
+                const nameIdx = findIndex(['name']), codeIdx = findIndex(['code']), descIdx = findIndex(['description', 'desc']), gameIdx = findIndex(['game name', 'game']), creatorIdx = findIndex(['creator name', 'creator']);
                 allScripts = [];
                 for (let i = 1; i < rows.length; i++) {
                     if (!rows[i].trim()) continue;
                     let cols = parseCSVLine(rows[i]);
-                    
-                    const name = cols[nameIdx] || 'بدون نام';
-                    const code = cols[codeIdx] || 'بدون کد';
-                    const desc = cols[descIdx] || '';
-                    const game = (gameIdx !== -1 && cols[gameIdx]) ? cols[gameIdx] : 'نامشخص';
-                    const creator = (creatorIdx !== -1 && cols[creatorIdx]) ? cols[creatorIdx] : 'ناشناس';
-                    
+                    const name = cols[nameIdx] || 'بدون نام', code = cols[codeIdx] || 'بدون کد', desc = cols[descIdx] || '', game = (gameIdx !== -1 && cols[gameIdx]) ? cols[gameIdx] : 'نامشخص', creator = (creatorIdx !== -1 && cols[creatorIdx]) ? cols[creatorIdx] : 'ناشناس';
                     if (name === 'بدون نام' || name.includes('http') || name.includes('.com')) continue;
-
                     allScripts.push({ name, desc, code: code.replace(/<br>/g, '\n'), game, creator });
                 }
                 renderScripts(allScripts);
@@ -432,24 +311,20 @@
         function renderScripts(scripts) {
             const container = document.getElementById('scripts-list');
             container.innerHTML = '';
-            if (scripts.length === 0) { container.innerHTML = '<p style="text-align:center; color:var(--text-dim); padding: 30px; font-size: 15px;">اسکریپتی یافت نشد.</p>'; return; }
-
+            if (scripts.length === 0) { container.innerHTML = '<p style="text-align:center; color:var(--dim); padding: 30px; font-size: 15px;">اسکریپتی یافت نشد.</p>'; return; }
             scripts.forEach((s, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                card.style.animationDelay = (index * 0.08) + 's';
-                
+                card.style.animationDelay = (index * 0.1) + 's';
                 card.innerHTML = `
-                    <div class="card-header"><h3>${s.name}</h3></div>
-                    <div class="meta-info">
-                        <span class="meta-item">🎮 ${s.game}</span>
-                        <span class="meta-item">👤 ${s.creator}</span>
-                    </div>
+                    <h3>${s.name}</h3>
+                    <div class="meta-info"><span class="meta-item">🎮 ${s.game}</span><span class="meta-item">👤 ${s.creator}</span></div>
                     <p>${s.desc}</p>
                     <div class="code-container"><pre><code>${s.code}</code></pre></div>
                     <button class="copy-btn" onclick="copyText(this, \`${s.code.replace(/`/g, '\\`')}\`)">📋 کپی کد</button>
                 `;
                 container.appendChild(card);
+                applyTilt(card);
             });
         }
 
@@ -458,17 +333,13 @@
                 const toast = document.getElementById('toast');
                 toast.classList.add('show');
                 btn.innerText = '✅ کپی شد!';
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    btn.innerText = '📋 کپی کد';
-                }, 2000);
+                setTimeout(() => { toast.classList.remove('show'); btn.innerText = '📋 کپی کد'; }, 2000);
             });
         }
         
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const q = e.target.value.toLowerCase();
-            const filtered = allScripts.filter(s => s.name.toLowerCase().includes(q) || s.game.toLowerCase().includes(q));
-            renderScripts(filtered);
+            renderScripts(allScripts.filter(s => s.name.toLowerCase().includes(q) || s.game.toLowerCase().includes(q)));
         });
         
         fetchScripts();
